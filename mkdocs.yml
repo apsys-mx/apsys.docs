@@ -1,0 +1,63 @@
+site_name: Bienvenido a ApsysDocs
+site_url: https://mikelanuza03.github.io/ApsysDocsTest/
+
+theme:
+  name: material
+  logo: logo_Apsys_white-ver.ico
+  features:
+    - toc.follow
+    - navigation.expand
+    - navigation.top
+    - content.code.copy
+  favicon: LOGO_APSYS.png
+  icon:
+    admonition:
+      note: octicons/tag-16
+      abstract: octicons/checklist-16
+      info: octicons/info-16
+      tip: octicons/squirrel-16
+      success: octicons/check-16
+      question: octicons/question-16
+      warning: octicons/alert-16
+      failure: octicons/x-circle-16
+      danger: octicons/zap-16
+      bug: octicons/bug-16
+      example: octicons/beaker-16
+      quote: octicons/quote-16
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - toc:
+      title: Tabla de contenidos
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
+nav: 
+  - Inicio: 'index.md'
+  - Herramienta de Inducción: 
+      - Primeros Pasos: 'InductionTools/index.md'
+      - Usemos Visual Code: 'InductionTools/Usemos Visual Studio Code 6523405cead146ed9167afb69b843478.md'
+      - Usemos Visual Studio: 'InductionTools/Usemos Visual Studio ee10e243d40246b480dced765d9016fb.md'
+      - Usemos el gestionador de bases de datos: 'InductionTools/Usemos el gestionador de bases de datos fd9ae6110c8343dea703aaca3985a015.md'
+  - Documentación de Procesos Internos:
+      - Inicio: 'InternalProcedures/index.md'
+      - Plantillas: 
+          - Instalacion y uso de Plantillas: 'InternalProcedures/Templates/index.md'
+      - FAQs : 'InternalProcedures/FAQ.md'
+  - Documentación de Proyectos:
+      - Inicio: 'ProjectDocs/index.md'
