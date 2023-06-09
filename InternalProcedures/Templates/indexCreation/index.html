@@ -479,8 +479,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#plantilla" class="md-nav__link">
-    Plantilla
+  <a href="#configuracion" class="md-nav__link">
+    Configuración
   </a>
   
 </li>
@@ -609,8 +609,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#plantilla" class="md-nav__link">
-    Plantilla
+  <a href="#configuracion" class="md-nav__link">
+    Configuración
   </a>
   
 </li>
@@ -640,7 +640,67 @@
 <h2 id="1er-proyecto-con-una-plantilla"><strong> 1er proyecto con una plantilla</strong></h2>
 <p>Dentro de Apsys y como busqueda de la mejora continua, hemos creado algunas plantillas, esto con el fiel objetivo de estandarizar nuestros procesos para el desarrollo del software.
 Y como primer ejercicio tendras la tarea de generar un indice básico utilizando una plantilla y siguiendo las instrucciones que encontraras a continuación.</p>
-<h3 id="plantilla"><strong>Plantilla</strong></h3>
+<h3 id="configuracion"><strong>Configuración</strong></h3>
+<p>Deberas abrir el software Visual Studio, usea la plantilla de Apsys que instalamos previamente y con ella crearemos un nuevo
+proyecto llamado adventure.works</p>
+<p><img alt="Untitled" src="../Resources/01Create-project.png" /></p>
+<p>Tambien iniciaremos el Microsoft SQL Management Studio y crearemos una nueva base de datos con el nombre <em>adventure.works</em>.</p>
+<p><img alt="Untitled" src="../Resources/02Create-database.png" /></p>
+<p><img alt="Untitled" src="../Resources/03Create-database.png" /></p>
+<p>Para poder restaurar la base de datos para nuestro proyecto, descargaremos el respaldo de AdventureWorks de Microsoft 
+<a href="https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver16&amp;tabs=ssms" title="Aqui">Aqui.</a></p>
+<div class="admonition nota">
+<p class="admonition-title">Nota</p>
+<p>Es importante que descargue el respaldo adecuada para la versión de Microsoft SQL Management Studio que se tenga instalada
+en tu equipo.</p>
+</div>
+<p><img alt="Untitled" src="../Resources/04Download-database.png" /></p>
+<p>Restauramos el respaldo a la base de datos que creamos.</p>
+<p><img alt="Untitled" src="../Resources/05Restore-database.png" /></p>
+<p><img alt="Untitled" src="../Resources/06Restore-database.png" /></p>
+<p><img alt="Untitled" src="../Resources/07Restore-database.png" /></p>
+<p>La selección de la ruta depende de la carpeta en donde se guardo el respaldo de la base de datos que descargaste, en este ejemplo se guardo en la siguiente ruta:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>C:\devel\db.backup
+</span></code></pre></div>
+<p><img alt="Untitled" src="../Resources/08Restore-database.png" /></p>
+<p>Posteriormente verificamos que la base de datos contenga las siguientes tablas:</p>
+<p><img alt="Untitled" src="../Resources/09Restore-database.png" /></p>
+<p>Hasta este punto hemos finalizado con la configuración para la base de datos de nuestro proyecto por lo que seguiremos trabajando nuevamente en Visual Studio.</p>
+<p>Crearemos un <em>endpoint</em> que obtenga la lista de productos, para implementar esta funcionalidad revisemos la estructura de nuestra solución en Visual Studio.</p>
+<p><img alt="untitled" src="../Resources/10Solution-structure.png" /></p>
+<p>Nos situamos en el explorador de la solución donde se denotan cuatro capas <strong>dominio</strong>(<em>01.domain</em>), <strong>datos</strong>(<em>02.data</em>), <strong>servicios</strong>(<em>03.services</em>), <strong>webapi</strong>(<em>webapi</em>). Se deduce que cada uno tiene diferente funcion dentro del proyecto global que estamos desarrollando. </p>
+<div class="admonition nota">
+<p class="admonition-title">Nota</p>
+<p>Notese que en cada capa hay un proyecto con la terminación <em>testing</em>, estos son proyectos para realizar pruebas automatizadas y que son de gran importancia, pero para este tutorial no los usaremos ya que nos centraremos en poner en marcha nuestro primer proyecto.</p>
+</div>
+<p>La primer capa (proyecto) con que trabajaremos sera el <strong>dominio</strong>, crearemos un folder llamado <em>products</em> que contenderá las clases que usaremos para los productos.</p>
+<p><img alt="untitled" src="../Resources/11Create-folder.png" /></p>
+<p><img alt="untitled" src="../Resources/12Create-folder.png" /></p>
+<p>Como siguiente paso agregaremos las clases que usaremos para lalógica de nuestra aplicación. La primera de ellas sera la clase que va a representar un producto de la aplicación y dicha clase la nombraremos <em>Product</em>.</p>
+<p><img alt="untitled" src="../Resources/13Create-class.png" /></p>
+<p><img alt="untitled" src="../Resources/14Create-class.png" /></p>
+<p>El codigo que colocaremos dentro de la clase creada sera el siguiente:</p>
+<div class="language-ruby highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>  <span class="kp">public</span> <span class="k">class</span> <span class="nc">Product</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="p">{</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        <span class="kp">public</span> <span class="n">int</span> <span class="no">ProductID</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        <span class="kp">public</span> <span class="n">string</span> <span class="no">Name</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="kp">public</span> <span class="n">string</span> <span class="no">ProductNumber</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        <span class="kp">public</span> <span class="n">string</span> <span class="no">Color</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="kp">public</span> <span class="n">decimal</span> <span class="no">StandardCost</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        <span class="kp">public</span> <span class="n">decimal</span> <span class="no">ListPrice</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        <span class="kp">public</span> <span class="n">string</span> <span class="no">Size</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="kp">public</span> <span class="n">string</span> <span class="no">Weight</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        <span class="kp">public</span> <span class="no">DateTime</span> <span class="no">SellStartDate</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>        <span class="kp">public</span> <span class="no">DateTime</span><span class="p">?</span> <span class="no">SellEndDate</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        <span class="kp">public</span> <span class="no">DateTime</span><span class="p">?</span> <span class="no">DiscontinuedDate</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        <span class="kp">public</span> <span class="n">bool</span> <span class="no">ThumbNailPhoto</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        <span class="kp">public</span> <span class="n">string</span> <span class="no">ThumbnailPhotoFileName</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>        <span class="kp">public</span> <span class="no">Guid</span> <span class="n">rowguid</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>        <span class="kp">public</span> <span class="no">DateTime</span> <span class="no">ModifiedDate</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>    <span class="p">}</span>
+</span></code></pre></div>
+<p>Por el momento solo agregaremos este bloque de codigo en la clase, ya que para este punto nuestro objetivo es configurar la conexión con nuestra base de datos.</p>
+<p>Como siguiente paso</p>
 
 
 
