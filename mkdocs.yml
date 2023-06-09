@@ -24,6 +24,18 @@ theme:
       bug: octicons/bug-16
       example: octicons/beaker-16
       quote: octicons/quote-16
+  palette:
+    # Palette toggle for light mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Modo Claro
+
+    # Palette toggle for dark mode
+    - scheme: primary
+      toggle:
+        icon: material/weather-night
+        name: Modo Oscuro
 
 extra_css:
   - stylesheets/extra.css
@@ -58,6 +70,7 @@ nav:
       - Inicio: 'InternalProcedures/index.md'
       - Plantillas: 
           - Instalacion y uso de Plantillas: 'InternalProcedures/Templates/index.md'
-      - FAQs : 'InternalProcedures/FAQ.md'
+          - Crear un indice desde una plantilla: 'InternalProcedures/Templates/indexCreation.md'
+      - FAQ's : 'InternalProcedures/FAQ.md'
   - Documentación de Proyectos:
       - Inicio: 'ProjectDocs/index.md'
