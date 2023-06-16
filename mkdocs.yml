@@ -66,12 +66,13 @@ nav:
       - Usemos Visual Studio: "InductionTools/Usemos Visual Studio ee10e243d40246b480dced765d9016fb.md"
       - Usemos el gestionador de bases de datos: "InductionTools/Usemos el gestionador de bases de datos fd9ae6110c8343dea703aaca3985a015.md"
   - Documentación de Procesos Internos:
-      - Inicio: 'InternalProcedures/index.md'
-      - Plantillas Backend: 
-          - Instalacion y uso de Plantillas: 'InternalProcedures/BackendTemplates/index.md'
-          - Crear un indice desde una plantilla: 'InternalProcedures/BackendTemplates/indexCreation.md'
+      - Inicio: "InternalProcedures/index.md"
+      - Plantillas Backend:
+          - Instalacion y uso de Plantillas: "InternalProcedures/BackendTemplates/index.md"
+          - Crear un indice desde una plantilla: "InternalProcedures/BackendTemplates/indexCreation.md"
       - Plantillas Frontend:
-          - Instalación y uso de Plantillas: "InternalProcedures/Templates/frontendIndex.md"
+          - Instalación y uso de Plantillas: "InternalProcedures/FrontendTemplates/index.md"
+          - Crear un indice desde una plantilla: "InternalProcedures/FrontendTemplates/indexCreation.md"
       - FAQ's: "InternalProcedures/FAQ.md"
   - Documentación de Proyectos:
       - Inicio: "ProjectDocs/index.md"
