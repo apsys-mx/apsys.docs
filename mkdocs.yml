@@ -51,26 +51,27 @@ markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
-      pygments_lang_class: true
+      # pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
   - admonition
   - pymdownx.details
-  - pymdownx.superfences
 
-nav: 
-  - Inicio: 'index.md'
-  - Herramienta de Inducción: 
-      - Primeros Pasos: 'InductionTools/index.md'
-      - Usemos Visual Code: 'InductionTools/Usemos Visual Studio Code 6523405cead146ed9167afb69b843478.md'
-      - Usemos Visual Studio: 'InductionTools/Usemos Visual Studio ee10e243d40246b480dced765d9016fb.md'
-      - Usemos el gestionador de bases de datos: 'InductionTools/Usemos el gestionador de bases de datos fd9ae6110c8343dea703aaca3985a015.md'
+nav:
+  - Inicio: "index.md"
+  - Herramienta de Inducción:
+      - Primeros Pasos: "InductionTools/index.md"
+      - Usemos Visual Code: "InductionTools/Usemos Visual Studio Code 6523405cead146ed9167afb69b843478.md"
+      - Usemos Visual Studio: "InductionTools/Usemos Visual Studio ee10e243d40246b480dced765d9016fb.md"
+      - Usemos el gestionador de bases de datos: "InductionTools/Usemos el gestionador de bases de datos fd9ae6110c8343dea703aaca3985a015.md"
   - Documentación de Procesos Internos:
       - Inicio: 'InternalProcedures/index.md'
       - Plantillas Backend: 
           - Instalacion y uso de Plantillas: 'InternalProcedures/BackendTemplates/index.md'
           - Crear un indice desde una plantilla: 'InternalProcedures/BackendTemplates/indexCreation.md'
-      - FAQ's : 'InternalProcedures/FAQ.md'
+      - Plantillas Frontend:
+          - Instalación y uso de Plantillas: "InternalProcedures/Templates/frontendIndex.md"
+      - FAQ's: "InternalProcedures/FAQ.md"
   - Documentación de Proyectos:
-      - Inicio: 'ProjectDocs/index.md'
+      - Inicio: "ProjectDocs/index.md"
