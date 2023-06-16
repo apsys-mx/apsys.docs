@@ -80,5 +80,3 @@ al seleccionarla nos creara el nuevo proyecto y nos pedirá el nombre y algunos 
 al darle en crear se generara la base del nuevo proyecto: 
 
 ![Untitled](Resources/Untitled%2013.png)
-
-## *Guia para instalar y usar una plantilla en frontend*

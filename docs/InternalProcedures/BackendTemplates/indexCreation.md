@@ -93,5 +93,84 @@ El codigo que colocaremos dentro de la clase creada sera el siguiente:
 
 Por el momento solo agregaremos este bloque de codigo en la clase, ya que para este punto nuestro objetivo es configurar la conexión con nuestra base de datos.
 
-Como siguiente paso 
+Como siguiente paso debemos trabajar en la capa de datos y para ello primeramente haremos algunos cambios en la conexión a la base de datos. Se abre el archivo *runmigrations.bat* y *rollback.bat*
 
+![untitled](Resources/15migration-files.png)
+
+En ambos archivos vamos a editar el nombre del ejecutable y de la base de datos de la siguiente manera:
+*runmigrations.bat*
+
+![untitled](Resources/16run-migrations.png)
+
+![untitled](Resources/17run-migrations-updated.png)
+
+*rollback.bat*
+
+![untitled](Resources/18rollback.png)
+
+![untitled](Resources/19rollback-updated.png)
+
+Buscaremos el archivo *runmigrations.bat* en el explorador de archivos y lo ejecutamos, al hacerlo se crearan algunas tablas adicionales en la base de datos.
+
+!!!nota
+    Por el momento no usaremos estas tablas, sin embargo son necesarias para poder terminar el tutorial. 
+
+El resultado de la ejecución será alfo similar a lo que se muestra en la siguiente imagen:
+
+![untitled](Resources/20migrations.png)
+
+Ahora crearemos la interfaz del repositorio que se ralaciona con la tabla de productos en la base de datos, en el proyecto de repositorios agregamos una nueva interfaz llamada *IProductsRepository*
+
+![untitles](Resources/21Products-interface.png)
+
+![untitled](Resources/22Products-interface.png)
+
+```ruby
+using adventure.works.products;
+
+namespace adventure.works.repositories
+{
+    public interface IProductsRepository : IRepository<Product>
+    {
+    }
+}
+```
+
+Siendo que la interfaz anterior solo define el contrato del repositorio ahora debemos crear una clase que implemente este repositorio, dicha clase la vamos a agregar en el proyecto de repositorios para Nhibernate.
+
+!!!info
+    El proceso a seguir para agregar una clase es el mismo que anteriormente se expuso con la clase *Producto*
+
+Agregamos la clase *ProductRepository*
+
+![untitled](Resources/23Products-repository.png)
+
+El código de la clase *ProductRepository* es el siguiente:
+
+```ruby
+using adventure.works.products;
+using NHibernate;
+
+namespace adventure.works.repositories.nhibernate
+{
+    public class ProductRepository : Repository<Product>, IProductsRepository
+    {
+        public ProductRepository(ISession session) 
+            : base(session)
+        {
+        }
+    }
+}
+
+```
+
+Posteriormente agregamos el repositorio de produtos en la unidad de trabajo, para poder realizar esto abrimos la interfaz *IUnitOfWork* que se encuentra en el proyecto de repositorios.
+<!-- Img24 -->
+En esta interfaz agregaremos la linea de código siguiente, la cual define el repositorio de productos.
+<!-- # Img25 -->
+Por otra parte también deberemos modificar la clase que implementa la interfaz de la unidad de trabajo, tal que ahora vamos a abrir la clase *UnitOfWork*
+<!-- # Img26 -->
+En esta clase agregaremos dos lineas de código tal como se puede observar en la siguiente imagen:
+<!-- # Img27 -->
+Hay que configura el mapeo para relacionar la clase *Product* del dominio con la tabla ```[SalesLT].[Product]``` de la base de datos, agregamos una nueva clase llamada *ProductMapper* en la carpeta *mappers* del proyecto de repositorios de *NHibernate*.
+<!-- # Img28 -->
