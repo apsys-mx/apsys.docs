@@ -69,8 +69,8 @@ nav:
   - Documentación de Procesos Internos:
       - Inicio: 'InternalProcedures/index.md'
       - Plantillas Backend: 
-          - Instalacion y uso de Plantillas: 'InternalProcedures/Templates/index.md'
-          - Crear un indice desde una plantilla: 'InternalProcedures/Templates/indexCreation.md'
+          - Instalacion y uso de Plantillas: 'InternalProcedures/BackendTemplates/index.md'
+          - Crear un indice desde una plantilla: 'InternalProcedures/BackendTemplates/indexCreation.md'
       - FAQ's : 'InternalProcedures/FAQ.md'
   - Documentación de Proyectos:
       - Inicio: 'ProjectDocs/index.md'
