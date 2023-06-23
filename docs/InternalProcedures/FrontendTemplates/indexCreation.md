@@ -5,25 +5,25 @@ Instala los siguientes paquetes que contendrán lo requerido para el funcionamie
 - Install moment
 
 ```ruby linenums="1"
-`npm install moment`
+npm install moment
 ```
 
 - Install uuidv4
 
 ```ruby linenums="1"
-`npm install uuidv4`
+npm install uuidv4
 ```
 
 - Install react-select
 
 ```ruby linenums="1"
-`npm install react-select`
+npm install react-select
 ```
 
 - Install react-date-range
 
 ```ruby linenums="1"
-`npm install react-date-range`
+npm install react-date-range
 ```
 
 #### **Archivo endpoint**
