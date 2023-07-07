@@ -54,7 +54,9 @@ Comprobamos si la URL corresponde con la del back:
 
 Para obtener la información del index se debe generar un endpoint para realizar la petición de back.
 
-Ejemplo de la estructura del endpoint al back aplicando paginado, ordenamiento y filtros:
+Si no existe el archivo donde se configuran los endpoints crea uno para comenzar a crear los métodos donde vamos a obtener la información del back y los catálogos para los filtros.
+
+Estructura del endpoint para obtener la información aplicando paginado, filtros y ordenamiento.
 
 ```ruby linenums="1"
 getTimesheets: builder.query({
@@ -87,47 +89,6 @@ getCatalogs: builder.query({
 			},
 		}),
 ```
-
-### **Crear configuración de tabla**
-
-Crear el archivo 'configurationTable.jsx'
-
-Este archivo contiene la confirmación de las columnas que se mostraran en la tabla:
-
-```ruby linenums="1"
-export const defaultTableConfigurationTimeSheets = [
-    {
-       title: 'Codigo del proyecto', //=>Nombre de la columna
-		sortable: true, //=>Si aplicará ordenmiento en la columna
-		dataSource: 'projectCode', //=>Nombre que regrea el back
-		isActiveFilter: true, //=>Si aplicará filtro en la columna
-		filterType: 'text', //=>>El tipo de filtro
-    },
-        {
-        title: 'Fecha de inicio',
-        sortable: true,
-        dataSource: 'startDate',
-        isActiveFilter: true,
-        filterType: 'date',
-    },
-        {
-        title: 'Duración',
-        sortable: true,
-        dataSource: 'duration',
-        isActiveFilter: true,
-        filterType: 'numeric',
-    },
-]
-
-```
-
-Al ser un repositorio generado a partir de una base, notaremos que ya existen algunos archivos y carpetas en el proyecto.
-Identifica el datagrid dentro de la siguiente ruta src > features > common > datagrid  
-en esa ubicación también podrás encontrar los documentos base de filtros y de buscador.
-
-### **Creación de la tabla index **
-
-Para generar la tabla, es necesario revisar si contamos con los siguientes archivos y que contenga la siguiente información:
 
 #### **Archivo Slice **
 
@@ -218,6 +179,43 @@ const getFilters = createSelector(getViewState, (state) => {
 })
 
 export {  getPagination, getSorting, getFilters, getViewState }
+```
+
+### **Creación de la tabla index **
+
+Para generar la tabla, es necesario revisar si contamos con los siguientes archivos y que contenga la siguiente información:
+
+### **Crear configuración de tabla**
+
+Crear el archivo 'configurationTable.jsx'
+
+Este archivo contiene la confirmación de las columnas que se mostraran en la tabla:
+
+```ruby linenums="1"
+export const defaultTableConfigurationTimeSheets = [
+    {
+       title: 'Codigo del proyecto', //=>Nombre de la columna
+		sortable: true, //=>Si aplicará ordenmiento en la columna
+		dataSource: 'projectCode', //=>Nombre que regrea el back
+		isActiveFilter: true, //=>Si aplicará filtro en la columna
+		filterType: 'text', //=>>El tipo de filtro
+    },
+        {
+        title: 'Fecha de inicio',
+        sortable: true,
+        dataSource: 'startDate',
+        isActiveFilter: true,
+        filterType: 'date',
+    },
+        {
+        title: 'Duración',
+        sortable: true,
+        dataSource: 'duration',
+        isActiveFilter: true,
+        filterType: 'numeric',
+    },
+]
+
 ```
 
 #### **Implementar DataGrid **
