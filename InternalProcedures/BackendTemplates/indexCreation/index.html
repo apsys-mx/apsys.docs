@@ -703,100 +703,85 @@
 Y como primer ejercicio tendras la tarea de generar un indice básico utilizando una plantilla y siguiendo las instrucciones que encontraras a continuación.</p>
 <h3 id="configuracion"><strong>Configuración</strong></h3>
 <p>Deberas abrir el software Visual Studio, usea la plantilla de Apsys que instalamos previamente y con ella crearemos un nuevo
-proyecto llamado adventure.works</p>
+proyecto llamado apsys.pokedex</p>
 <p><img alt="Untitled" src="../Resources/01Create-project%20%281%29.png" /></p>
-<p>Tambien iniciaremos el Microsoft SQL Management Studio y crearemos una nueva base de datos con el nombre <em>adventure.works</em>.</p>
+<p>Hay que descargar el respaldo de la base de datos por medio del siguiente link: <a href="../pokedex.bak" title="download">Pokedex DB</a></p>
+<p>Tambien iniciaremos el Microsoft SQL Management Studio y crearemos una nueva base de datos con el nombre <em>pokedex.devel</em>.</p>
 <p><img alt="Untitled" src="../Resources/02Create-database.png" /></p>
 <p><img alt="Untitled" src="../Resources/03Create-database%20%281%29.png" /></p>
-<p>Para poder restaurar la base de datos para nuestro proyecto, descargaremos el respaldo de AdventureWorks de Microsoft 
-<a href="https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver16&amp;tabs=ssms" title="Aqui">Aqui.</a></p>
-<div class="admonition nota">
-<p class="admonition-title">Nota</p>
-<p>Es importante que descargue el respaldo adecuada para la versión de Microsoft SQL Management Studio que se tenga instalada
-en tu equipo.</p>
-</div>
-<p><img alt="Untitled" src="../Resources/04Download-database.png" /></p>
 <p>Restauramos el respaldo a la base de datos que creamos.</p>
 <p><img alt="Untitled" src="../Resources/05Restore-database.png" /></p>
-<p><img alt="Untitled" src="../Resources/06Restore-database.png" /></p>
-<p><img alt="Untitled" src="../Resources/07Restore-database.png" /></p>
+<p><img alt="Untitled" src="../Resources/06Restore-database%20%281%29.png" /></p>
+<p><img alt="Untitled" src="../Resources/07Restore-database%20%281%29.png" /></p>
 <p>La selección de la ruta depende de la carpeta en donde se guardo el respaldo de la base de datos que descargaste, en este ejemplo se guardo en la siguiente ruta:</p>
-<div class="highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>C:\devel\db.backup
+<div class="highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup
 </span></code></pre></div>
-<p><img alt="Untitled" src="../Resources/08Restore-database.png" /></p>
+<p><img alt="Untitled" src="../Resources/08Restore-database%20%281%29.png" /></p>
 <p>Posteriormente verificamos que la base de datos contenga las siguientes tablas:</p>
-<p><img alt="Untitled" src="../Resources/09Restore-database.png" /></p>
+<p><img alt="Untitled" src="../Resources/09Restore-database%20%281%29.png" /></p>
 <p>Hasta este punto hemos finalizado con la configuración para la base de datos de nuestro proyecto por lo que seguiremos trabajando nuevamente en Visual Studio.</p>
-<p>Crearemos un <em>endpoint</em> que obtenga la lista de productos, para implementar esta funcionalidad revisemos la estructura de nuestra solución en Visual Studio.</p>
-<p><img alt="untitled" src="../Resources/10Solution-structure.png" /></p>
+<p>Crearemos un <em>endpoint</em> que obtenga la lista de pokemons, para implementar esta funcionalidad revisaremos la estructura de nuestra solución en Visual Studio.</p>
+<p><img alt="Untitled" src="../Resources/10Soution-structure.png" /></p>
 <p>Nos situamos en el explorador de la solución donde se denotan cuatro capas <strong>dominio</strong>(<em>01.domain</em>), <strong>datos</strong>(<em>02.data</em>), <strong>servicios</strong>(<em>03.services</em>), <strong>webapi</strong>(<em>webapi</em>). Se deduce que cada uno tiene diferente funcion dentro del proyecto global que estamos desarrollando. </p>
 <div class="admonition nota">
 <p class="admonition-title">Nota</p>
 <p>Notese que en cada capa hay un proyecto con la terminación <em>testing</em>, estos son proyectos para realizar pruebas automatizadas y que son de gran importancia, pero para este tutorial no los usaremos ya que nos centraremos en poner en marcha nuestro primer proyecto.</p>
 </div>
-<p>La primer capa (proyecto) con que trabajaremos sera el <strong>dominio</strong>, crearemos un folder llamado <em>products</em> que contenderá las clases que usaremos para los productos.</p>
-<p><img alt="untitled" src="../Resources/11Create-folder.png" /></p>
-<p><img alt="untitled" src="../Resources/12Create-folder.png" /></p>
-<p>Como siguiente paso agregaremos las clases que usaremos para lalógica de nuestra aplicación. La primera de ellas sera la clase que va a representar un producto de la aplicación y dicha clase la nombraremos <em>Product</em>.</p>
-<p><img alt="untitled" src="../Resources/13Create-class.png" /></p>
-<p><img alt="untitled" src="../Resources/14Create-class.png" /></p>
+<p>La primera capa que trabajaremos sera la que corresponde al dominio. </p>
+<p>Como siguiente paso agregaremos las clases que usaremos para lalógica de nuestra aplicación. La primera de ellas sera la clase que va a representar un producto de la aplicación y dicha clase la nombraremos <em>Pokemon</em>.</p>
+<p><img alt="Untitled" src="../Resources/13Create-class.png" /></p>
+<p><img alt="Untitled" src="../Resources/14BRefactor-base-class.png" /></p>
 <p>El codigo que colocaremos dentro de la clase creada sera el siguiente:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-1-10">10</a></span>
-<span class="normal"><a href="#__codelineno-1-11">11</a></span>
-<span class="normal"><a href="#__codelineno-1-12">12</a></span>
-<span class="normal"><a href="#__codelineno-1-13">13</a></span>
-<span class="normal"><a href="#__codelineno-1-14">14</a></span>
-<span class="normal"><a href="#__codelineno-1-15">15</a></span>
-<span class="normal"><a href="#__codelineno-1-16">16</a></span>
-<span class="normal"><a href="#__codelineno-1-17">17</a></span>
-<span class="normal"><a href="#__codelineno-1-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>  <span class="kp">public</span> <span class="k">class</span> <span class="nc">Product</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a>    <span class="p">{</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>        <span class="kp">public</span> <span class="n">int</span> <span class="no">ProductID</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a>        <span class="kp">public</span> <span class="n">string</span> <span class="no">Name</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5"></a>        <span class="kp">public</span> <span class="n">string</span> <span class="no">ProductNumber</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6"></a>        <span class="kp">public</span> <span class="n">string</span> <span class="no">Color</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a>        <span class="kp">public</span> <span class="n">decimal</span> <span class="no">StandardCost</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a>        <span class="kp">public</span> <span class="n">decimal</span> <span class="no">ListPrice</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9"></a>        <span class="kp">public</span> <span class="n">string</span> <span class="no">Size</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10"></a>        <span class="kp">public</span> <span class="n">string</span> <span class="no">Weight</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11"></a>        <span class="kp">public</span> <span class="no">DateTime</span> <span class="no">SellStartDate</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12"></a>        <span class="kp">public</span> <span class="no">DateTime</span><span class="p">?</span> <span class="no">SellEndDate</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13"></a>        <span class="kp">public</span> <span class="no">DateTime</span><span class="p">?</span> <span class="no">DiscontinuedDate</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14"></a>        <span class="kp">public</span> <span class="n">bool</span> <span class="no">ThumbNailPhoto</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15"></a>        <span class="kp">public</span> <span class="n">string</span> <span class="no">ThumbnailPhotoFileName</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16"></a>        <span class="kp">public</span> <span class="no">Guid</span> <span class="n">rowguid</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17"></a>        <span class="kp">public</span> <span class="no">DateTime</span> <span class="no">ModifiedDate</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18"></a>    <span class="p">}</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="n">namespace</span> <span class="n">apsys</span><span class="o">.</span><span class="n">pokedex</span><span class="o">.</span><span class="n">products</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="p">{</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>    <span class="kp">public</span> <span class="k">class</span> <span class="nc">Pokemon</span> <span class="p">:</span> <span class="no">AbstractDomainObject</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a>    <span class="p">{</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5"></a>        <span class="kp">public</span> <span class="n">virtual</span> <span class="n">string</span> <span class="no">Code</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6"></a>        <span class="kp">public</span> <span class="n">virtual</span> <span class="n">string</span> <span class="no">Name</span> <span class="p">{</span> <span class="n">get</span><span class="p">;</span> <span class="n">set</span><span class="p">;</span> <span class="p">}</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a>    <span class="p">}</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
+<p>Debido a que el <em>id</em> del pokemon es un entero en la base de datos vamos a modificar la clase AbstractDomainObject para quede de la siguiente manera:</p>
 <p>Por el momento solo agregaremos este bloque de codigo en la clase, ya que para este punto nuestro objetivo es configurar la conexión con nuestra base de datos.</p>
-<p>Como siguiente paso debemos trabajar en la capa de datos y para ello primeramente haremos algunos cambios en la conexión a la base de datos. Se abre el archivo <em>runmigrations.bat</em> y <em>rollback.bat</em></p>
-<p><img alt="untitled" src="../Resources/15migration-files.png" /></p>
-<p>En ambos archivos vamos a editar el nombre del ejecutable y de la base de datos de la siguiente manera:
-<em>runmigrations.bat</em></p>
-<p><img alt="untitled" src="../Resources/16run-migrations.png" /></p>
-<p><img alt="untitled" src="../Resources/17run-migrations-updated.png" /></p>
-<p><em>rollback.bat</em></p>
-<p><img alt="untitled" src="../Resources/18rollback.png" /></p>
-<p><img alt="untitled" src="../Resources/19rollback-updated.png" /></p>
-<p>Buscaremos el archivo <em>runmigrations.bat</em> en el explorador de archivos y lo ejecutamos, al hacerlo se crearan algunas tablas adicionales en la base de datos.</p>
-<div class="admonition nota">
-<p class="admonition-title">Nota</p>
-<p>Por el momento no usaremos estas tablas, sin embargo son necesarias para poder terminar el tutorial. </p>
-</div>
-<p>El resultado de la ejecución será alfo similar a lo que se muestra en la siguiente imagen:</p>
-<p><img alt="untitled" src="../Resources/20migrations.png" /></p>
-<p>Ahora crearemos la interfaz del repositorio que se ralaciona con la tabla de productos en la base de datos, en el proyecto de repositorios agregamos una nueva interfaz llamada <em>IProductsRepository</em></p>
-<p><img alt="untitles" src="../Resources/21Products-interface.png" /></p>
-<p><img alt="untitled" src="../Resources/22Products-interface.png" /></p>
+<!-- Como siguiente paso debemos trabajar en la capa de datos y para ello primeramente haremos algunos cambios en la conexión a la base de datos. Se abre el archivo *runmigrations.bat* y *rollback.bat*
+
+![Untitled](Resources/15Migration-files%20(1).png)
+
+En ambos archivos vamos a editar el nombre del ejecutable y de la base de datos de la siguiente manera:
+*runmigrations.bat*
+
+![Untitled](Resources/16run-migrations.png)
+
+![Untitled](Resources/17run-migrations-updated.png)
+
+*rollback.bat*
+
+![Untitled](Resources/18rollback.png)
+
+![Untitled](Resources/19rollback-updated.png)
+
+Buscaremos el archivo *runmigrations.bat* en el explorador de archivos y lo ejecutamos, al hacerlo se crearan algunas tablas adicionales en la base de datos.
+
+!!!nota
+    Por el momento no usaremos estas tablas, sin embargo son necesarias para poder terminar el tutorial. 
+
+<!-- El resultado de la ejecución será alfo similar a lo que se muestra en la siguiente imagen:
+
+
+
+Ahora crearemos la interfaz del repositorio que se ralaciona con la tabla de productos en la base de datos, en el proyecto de repositorios agregamos una nueva interfaz llamada *IProductsRepository*
+
+
+
+
+
 <div class="highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">using</span> <span class="n">adventure</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">products</span><span class="p">;</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">namespace</span> <span class="n">adventure</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">repositories</span>
@@ -806,14 +791,18 @@ en tu equipo.</p>
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="p">}</span>
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>Siendo que la interfaz anterior solo define el contrato del repositorio ahora debemos crear una clase que implemente este repositorio, dicha clase la vamos a agregar en el proyecto de repositorios para Nhibernate.</p>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>El proceso a seguir para agregar una clase es el mismo que anteriormente se expuso con la clase <em>Producto</em></p>
-</div>
-<p>Agregamos la clase <em>ProductRepository</em></p>
-<p><img alt="untitled" src="../Resources/23Products-repository.png" /></p>
-<p>El código de la clase <em>ProductRepository</em> es el siguiente:</p>
+
+Siendo que la interfaz anterior solo define el contrato del repositorio ahora debemos crear una clase que implemente este repositorio, dicha clase la vamos a agregar en el proyecto de repositorios para Nhibernate.
+
+!!!info
+    El proceso a seguir para agregar una clase es el mismo que anteriormente se expuso con la clase *Producto*
+
+Agregamos la clase *ProductRepository*
+
+
+
+El código de la clase *ProductRepository* es el siguiente:
+
 <div class="highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">using</span> <span class="n">adventure</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">products</span><span class="p">;</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">using</span> <span class="no">NHibernate</span><span class="p">;</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
@@ -828,16 +817,16 @@ en tu equipo.</p>
 </span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="p">}</span>
 </span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>Posteriormente agregamos el repositorio de produtos en la unidad de trabajo, para poder realizar esto abrimos la interfaz <em>IUnitOfWork</em> que se encuentra en el proyecto de repositorios.</p>
+
+Posteriormente agregamos el repositorio de produtos en la unidad de trabajo, para poder realizar esto abrimos la interfaz *IUnitOfWork* que se encuentra en el proyecto de repositorios.
 <!-- Img24 -->
-<p>En esta interfaz agregaremos la linea de código siguiente, la cual define el repositorio de productos.</p>
+<!-- En esta interfaz agregaremos la linea de código siguiente, la cual define el repositorio de productos.
 <!-- # Img25 -->
-<p>Por otra parte también deberemos modificar la clase que implementa la interfaz de la unidad de trabajo, tal que ahora vamos a abrir la clase <em>UnitOfWork</em></p>
+<!-- Por otra parte también deberemos modificar la clase que implementa la interfaz de la unidad de trabajo, tal que ahora vamos a abrir la clase *UnitOfWork* -->
 <!-- # Img26 -->
-<p>En esta clase agregaremos dos lineas de código tal como se puede observar en la siguiente imagen:</p>
+<!-- En esta clase agregaremos dos lineas de código tal como se puede observar en la siguiente imagen: -->
 <!-- # Img27 -->
-<p>Hay que configura el mapeo para relacionar la clase <em>Product</em> del dominio con la tabla <code>[SalesLT].[Product]</code> de la base de datos, agregamos una nueva clase llamada <em>ProductMapper</em> en la carpeta <em>mappers</em> del proyecto de repositorios de <em>NHibernate</em>.</p>
-<!-- # Img28 -->
+<!-- Hay que configura el mapeo para relacionar la clase *Product* del dominio con la tabla ```[SalesLT].[Product]``` de la base de datos, agregamos una nueva clase llamada *ProductMapper* en la carpeta *mappers* del proyecto de repositorios de *NHibernate*. -->
 
 
 
