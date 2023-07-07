@@ -739,7 +739,7 @@ proyecto llamado apsys.pokedex</p>
 <span class="normal"><a href="#__codelineno-1-5">5</a></span>
 <span class="normal"><a href="#__codelineno-1-6">6</a></span>
 <span class="normal"><a href="#__codelineno-1-7">7</a></span>
-<span class="normal"><a href="#__codelineno-1-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="n">namespace</span> <span class="n">apsys</span><span class="o">.</span><span class="n">pokedex</span><span class="o">.</span><span class="n">products</span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="n">namespace</span> <span class="n">apsys</span><span class="o">.</span><span class="n">pokedex</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="p">{</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>    <span class="kp">public</span> <span class="k">class</span> <span class="nc">Pokemon</span> <span class="p">:</span> <span class="no">AbstractDomainObject</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a>    <span class="p">{</span>
@@ -748,8 +748,6 @@ proyecto llamado apsys.pokedex</p>
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a>    <span class="p">}</span>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
-<p>Debido a que el <em>id</em> del pokemon es un entero en la base de datos vamos a modificar la clase AbstractDomainObject para quede de la siguiente manera:</p>
-<p><img alt="Untitled" src="../Resources/14BRefactor-base-class.png" /></p>
 <p>Por el momento solo agregaremos este bloque de codigo en la clase, continuamos en el siguiente paso.</p>
 <p>Lo siguiente sera trabajar en nuestra capa de datos. Primero crearemos la interfaz del repositorio que se relaciona con la tabla de pokemons en la base de datos, en el proyecto de
 repositorios agregamos una nueva interfaz llamada <em>IPokemonRepository</em>.</p>
@@ -803,84 +801,174 @@ agregamos la clase <em>PokemonRepository</em></p>
 </span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="p">}</span>
 </span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
-<p>A continuación agregamos el repositorio de pokemons en la unidad de trabajo, para ello abrimos la interfaz <em>IUnitOfWork</em> que se encuentra en el proyecto de repositorios.</p>
-<!-- Como siguiente paso debemos trabajar en la capa de datos y para ello primeramente haremos algunos cambios en la conexión a la base de datos. Se abre el archivo *runmigrations.bat* y *rollback.bat*
-
-![Untitled](Resources/15Migration-files%20(1).png)
-
-En ambos archivos vamos a editar el nombre del ejecutable y de la base de datos de la siguiente manera:
-*runmigrations.bat*
-
-![Untitled](Resources/16run-migrations.png)
-
-![Untitled](Resources/17run-migrations-updated.png)
-
-*rollback.bat*
-
-![Untitled](Resources/18rollback.png)
-
-![Untitled](Resources/19rollback-updated.png)
-
-Buscaremos el archivo *runmigrations.bat* en el explorador de archivos y lo ejecutamos, al hacerlo se crearan algunas tablas adicionales en la base de datos.
-
-!!!nota
-    Por el momento no usaremos estas tablas, sin embargo son necesarias para poder terminar el tutorial. 
-
-<!-- El resultado de la ejecución será alfo similar a lo que se muestra en la siguiente imagen:
-
-
-
-Ahora crearemos la interfaz del repositorio que se ralaciona con la tabla de productos en la base de datos, en el proyecto de repositorios agregamos una nueva interfaz llamada *IProductsRepository*
-
-
-
-
-
-<div class="highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">using</span> <span class="n">adventure</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">products</span><span class="p">;</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">namespace</span> <span class="n">adventure</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">repositories</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">{</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="kp">public</span> <span class="n">interface</span> <span class="no">IProductsRepository</span> <span class="p">:</span> <span class="no">IRepository</span><span class="o">&lt;</span><span class="no">Product</span><span class="o">&gt;</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="p">{</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="p">}</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">}</span>
-</span></code></pre></div>
-
-Siendo que la interfaz anterior solo define el contrato del repositorio ahora debemos crear una clase que implemente este repositorio, dicha clase la vamos a agregar en el proyecto de repositorios para Nhibernate.
-
-!!!info
-    El proceso a seguir para agregar una clase es el mismo que anteriormente se expuso con la clase *Producto*
-
-Agregamos la clase *ProductRepository*
-
-
-
-El código de la clase *ProductRepository* es el siguiente:
-
-<div class="highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">using</span> <span class="n">adventure</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">products</span><span class="p">;</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">using</span> <span class="no">NHibernate</span><span class="p">;</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">namespace</span> <span class="n">adventure</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">repositories</span><span class="o">.</span><span class="n">nhibernate</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">{</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="kp">public</span> <span class="k">class</span> <span class="nc">ProductRepository</span> <span class="p">:</span> <span class="no">Repository</span><span class="o">&lt;</span><span class="no">Product</span><span class="o">&gt;</span><span class="p">,</span> <span class="no">IProductsRepository</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="p">{</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>        <span class="kp">public</span> <span class="no">ProductRepository</span><span class="p">(</span><span class="no">ISession</span> <span class="n">session</span><span class="p">)</span> 
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>            <span class="p">:</span> <span class="n">base</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>        <span class="p">{</span>
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="p">}</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="p">}</span>
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="p">}</span>
-</span></code></pre></div>
-
-Posteriormente agregamos el repositorio de produtos en la unidad de trabajo, para poder realizar esto abrimos la interfaz *IUnitOfWork* que se encuentra en el proyecto de repositorios.
-<!-- Img24 -->
-<!-- En esta interfaz agregaremos la linea de código siguiente, la cual define el repositorio de productos.
-<!-- # Img25 -->
-<!-- Por otra parte también deberemos modificar la clase que implementa la interfaz de la unidad de trabajo, tal que ahora vamos a abrir la clase *UnitOfWork* -->
-<!-- # Img26 -->
-<!-- En esta clase agregaremos dos lineas de código tal como se puede observar en la siguiente imagen: -->
-<!-- # Img27 -->
-<!-- Hay que configura el mapeo para relacionar la clase *Product* del dominio con la tabla ```[SalesLT].[Product]``` de la base de datos, agregamos una nueva clase llamada *ProductMapper* en la carpeta *mappers* del proyecto de repositorios de *NHibernate*. -->
+<p>A continuación agregamos el repositorio de pokemons en la unidad de trabajo, para ello abrimos la interfaz <em>IUnitOfWork</em> que se encuentra en el proyecto de repositorios.
+En esta interfaz agregamos una linea de codigo para definir el repositorio de pokemons.</p>
+<p><img alt="Untitled" src="../Resources/24Unit-of-work-interface.png" /></p>
+<p>Tambien debemos modificar la calse que implementa la interface de la unidad de trabajo, abrimos la clase <em>UnitOfWork</em>. En esta clase vamos a agregar dos lineas de codigo como se 
+puede ver en la siguiente imagen.</p>
+<p><img alt="Untitled" src="../Resources/25Unit-of-work.png" /></p>
+<p>Posteriormente configuraremos el mapeo de nuestra API, para relacionar la clase <em>Pokemon</em> del dominio con la tabla <code>[dbo].[Pokemon]</code> de la base de datos, agregamos una nueva 
+llamada <em>PokemonMapper</em> en la carpeta <em>mappers</em> del proyecto de repositorios de <em>NHibernate</em>.</p>
+<p><img alt="Untitled" src="../Resources/26Pokemon-mapper.png" /></p>
+<p>El codigo a insertar para la clase <em>PokemonMapper</em> sera:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="n">using</span> <span class="no">NHibernate</span><span class="o">.</span><span class="n">Mapping</span><span class="o">.</span><span class="n">ByCode</span><span class="p">;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="n">using</span> <span class="no">NHibernate</span><span class="o">.</span><span class="n">Mapping</span><span class="o">.</span><span class="n">ByCode</span><span class="o">.</span><span class="n">Conformist</span><span class="p">;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="n">namespace</span> <span class="n">apsys</span><span class="o">.</span><span class="n">pokedex</span><span class="o">.</span><span class="n">repositories</span><span class="o">.</span><span class="n">nhibernate</span><span class="o">.</span><span class="n">mappers</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="p">{</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6"></a>    <span class="kp">public</span> <span class="k">class</span> <span class="nc">PokemonMapper</span> <span class="p">:</span> <span class="no">ClassMapping</span><span class="o">&lt;</span><span class="no">Pokemon</span><span class="o">&gt;</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7"></a>    <span class="p">{</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8"></a>        <span class="kp">public</span> <span class="no">PokemonMapper</span><span class="p">()</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9"></a>        <span class="p">{</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10"></a>            <span class="no">Table</span><span class="p">(</span><span class="s2">&quot;Pokemons&quot;</span><span class="p">);</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11"></a>            <span class="no">Id</span><span class="p">(</span><span class="n">x</span> <span class="o">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">x</span> <span class="o">=&gt;</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12"></a>            <span class="p">{</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13"></a>                <span class="n">x</span><span class="o">.</span><span class="n">Generator</span><span class="p">(</span><span class="no">Generators</span><span class="o">.</span><span class="n">Assigned</span><span class="p">);</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14"></a>                <span class="n">x</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="s2">&quot;Id&quot;</span><span class="p">);</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15"></a>            <span class="p">});</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16"></a>            <span class="no">Property</span><span class="p">(</span><span class="n">b</span> <span class="o">=&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">x</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="n">x</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="s2">&quot;Code&quot;</span><span class="p">);</span> <span class="p">});</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17"></a>            <span class="no">Property</span><span class="p">(</span><span class="n">b</span> <span class="o">=&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">x</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="n">x</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="s2">&quot;Name&quot;</span><span class="p">);</span> <span class="p">});</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18"></a>        <span class="p">}</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19"></a>    <span class="p">}</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20"></a><span class="p">}</span>
+</span></code></pre></div></td></tr></table></div>
+<p>Hasta este punto hemos finalizado con la etapa que corresponde a los datos de nuestra API, por lo que pasaremos a la capa de servicios. Agregamos una clase
+llamada <em>PokemonsSearcher</em>, que se encargara de realizar la busqueda de pokemons en la base de datos, esta clase la agregaremos en el proyecto <code>apsys.pokedex.services</code></p>
+<p><img alt="Untitled" src="../Resources/27Pokemons-searcher.png" /></p>
+<p>El codigo de nuestra clase <em>PokemonsSearcher</em> es el siguiente:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span>
+<span class="normal"><a href="#__codelineno-5-20">20</a></span>
+<span class="normal"><a href="#__codelineno-5-21">21</a></span>
+<span class="normal"><a href="#__codelineno-5-22">22</a></span>
+<span class="normal"><a href="#__codelineno-5-23">23</a></span>
+<span class="normal"><a href="#__codelineno-5-24">24</a></span>
+<span class="normal"><a href="#__codelineno-5-25">25</a></span>
+<span class="normal"><a href="#__codelineno-5-26">26</a></span>
+<span class="normal"><a href="#__codelineno-5-27">27</a></span>
+<span class="normal"><a href="#__codelineno-5-28">28</a></span>
+<span class="normal"><a href="#__codelineno-5-29">29</a></span>
+<span class="normal"><a href="#__codelineno-5-30">30</a></span>
+<span class="normal"><a href="#__codelineno-5-31">31</a></span>
+<span class="normal"><a href="#__codelineno-5-32">32</a></span>
+<span class="normal"><a href="#__codelineno-5-33">33</a></span>
+<span class="normal"><a href="#__codelineno-5-34">34</a></span>
+<span class="normal"><a href="#__codelineno-5-35">35</a></span>
+<span class="normal"><a href="#__codelineno-5-36">36</a></span>
+<span class="normal"><a href="#__codelineno-5-37">37</a></span>
+<span class="normal"><a href="#__codelineno-5-38">38</a></span>
+<span class="normal"><a href="#__codelineno-5-39">39</a></span>
+<span class="normal"><a href="#__codelineno-5-40">40</a></span>
+<span class="normal"><a href="#__codelineno-5-41">41</a></span>
+<span class="normal"><a href="#__codelineno-5-42">42</a></span>
+<span class="normal"><a href="#__codelineno-5-43">43</a></span>
+<span class="normal"><a href="#__codelineno-5-44">44</a></span>
+<span class="normal"><a href="#__codelineno-5-45">45</a></span>
+<span class="normal"><a href="#__codelineno-5-46">46</a></span>
+<span class="normal"><a href="#__codelineno-5-47">47</a></span>
+<span class="normal"><a href="#__codelineno-5-48">48</a></span>
+<span class="normal"><a href="#__codelineno-5-49">49</a></span>
+<span class="normal"><a href="#__codelineno-5-50">50</a></span>
+<span class="normal"><a href="#__codelineno-5-51">51</a></span>
+<span class="normal"><a href="#__codelineno-5-52">52</a></span>
+<span class="normal"><a href="#__codelineno-5-53">53</a></span>
+<span class="normal"><a href="#__codelineno-5-54">54</a></span>
+<span class="normal"><a href="#__codelineno-5-55">55</a></span>
+<span class="normal"><a href="#__codelineno-5-56">56</a></span>
+<span class="normal"><a href="#__codelineno-5-57">57</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="n">using</span> <span class="n">apsys</span><span class="o">.</span><span class="n">dynamic</span><span class="o">.</span><span class="n">filters</span><span class="p">;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="n">using</span> <span class="n">apsys</span><span class="o">.</span><span class="n">pokedex</span><span class="o">.</span><span class="n">repositories</span><span class="p">;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="n">using</span> <span class="no">MediatR</span><span class="p">;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="n">namespace</span> <span class="n">apsys</span><span class="o">.</span><span class="n">pokedex</span><span class="o">.</span><span class="n">services</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="p">{</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7"></a>    <span class="kp">public</span> <span class="n">static</span> <span class="k">class</span> <span class="nc">PokemonsSearcher</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8"></a>    <span class="p">{</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9"></a>        <span class="kp">public</span> <span class="n">static</span> <span class="no">Query</span> <span class="no">CreateCommand</span><span class="p">(</span><span class="n">string</span> <span class="n">queryString</span><span class="p">)</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10"></a>            <span class="o">=&gt;</span> <span class="kp">new</span> <span class="no">Query</span><span class="p">(</span><span class="n">queryString</span><span class="p">);</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11"></a>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12"></a>        <span class="sr">//</span><span class="o">/</span> <span class="o">&lt;</span><span class="n">summary</span><span class="o">&gt;</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13"></a>        <span class="sr">//</span><span class="o">/</span> <span class="no">Command</span> <span class="k">class</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14"></a>        <span class="o">///</span> <span class="o">&lt;</span><span class="sr">/summary&gt;</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="sr">        public class Query : SearchQuery, IRequest&lt;ISearchResult&lt;Pokemon&gt;&gt;</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="sr">        {</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="sr">            public Query(string queryString)</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18"></a><span class="sr">            {</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19"></a><span class="sr">                QueryString = queryString;</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20"></a><span class="sr">            }</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21"></a><span class="sr">        }</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22"></a>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23"></a><span class="sr">        public class Handler : IRequestHandler&lt;Query, ISearchResult&lt;Pokemon&gt;&gt;</span>
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24"></a><span class="sr">        {</span>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25"></a><span class="sr">            private readonly IUnitOfWork _unitOfWork;</span>
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26"></a>
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27"></a><span class="sr">            /</span><span class="o">//</span> <span class="o">&lt;</span><span class="n">summary</span><span class="o">&gt;</span>
+</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28"></a>            <span class="sr">//</span><span class="o">/</span> <span class="no">Constructor</span>
+</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29"></a>            <span class="sr">//</span><span class="o">/</span> <span class="o">&lt;</span><span class="sr">/summary&gt;</span>
+</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30"></a><span class="sr">            /</span><span class="o">//</span> <span class="o">&lt;</span><span class="n">param</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;uoW&quot;</span><span class="o">&gt;&lt;</span><span class="sr">/param&gt;</span>
+</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31"></a><span class="sr">            /</span><span class="o">//</span> <span class="o">&lt;</span><span class="n">param</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;pipeline&quot;</span><span class="o">&gt;&lt;</span><span class="sr">/param&gt;</span>
+</span><span id="__span-5-32"><a id="__codelineno-5-32" name="__codelineno-5-32"></a><span class="sr">            public Handler(IUnitOfWork uoW)</span>
+</span><span id="__span-5-33"><a id="__codelineno-5-33" name="__codelineno-5-33"></a><span class="sr">            {</span>
+</span><span id="__span-5-34"><a id="__codelineno-5-34" name="__codelineno-5-34"></a><span class="sr">                _unitOfWork = uoW;</span>
+</span><span id="__span-5-35"><a id="__codelineno-5-35" name="__codelineno-5-35"></a><span class="sr">            }</span>
+</span><span id="__span-5-36"><a id="__codelineno-5-36" name="__codelineno-5-36"></a>
+</span><span id="__span-5-37"><a id="__codelineno-5-37" name="__codelineno-5-37"></a><span class="sr">            public Task&lt;ISearchResult&lt;Pokemon&gt;&gt; Handle(Query request, CancellationToken cancellationToken)</span>
+</span><span id="__span-5-38"><a id="__codelineno-5-38" name="__codelineno-5-38"></a><span class="sr">            {</span>
+</span><span id="__span-5-39"><a id="__codelineno-5-39" name="__codelineno-5-39"></a><span class="sr">                QueryStringParser queryStringParser = new QueryStringParser(request.QueryString);</span>
+</span><span id="__span-5-40"><a id="__codelineno-5-40" name="__codelineno-5-40"></a><span class="sr">                int pageNumber = queryStringParser.ParsePageNumber();</span>
+</span><span id="__span-5-41"><a id="__codelineno-5-41" name="__codelineno-5-41"></a><span class="sr">                int pageSize = queryStringParser.ParsePageSize();</span>
+</span><span id="__span-5-42"><a id="__codelineno-5-42" name="__codelineno-5-42"></a><span class="sr">                Sorting sorting = queryStringParser.ParseSorting&lt;Pokemon&gt;(nameof(Pokemon.Name));</span>
+</span><span id="__span-5-43"><a id="__codelineno-5-43" name="__codelineno-5-43"></a><span class="sr">                SortingCriteria sortingCriteria = new SortingCriteria(sorting.By, sorting.Direction == &quot;desc&quot; ? SortingCriteriaType.Descending : SortingCriteriaType.Ascending);</span>
+</span><span id="__span-5-44"><a id="__codelineno-5-44" name="__codelineno-5-44"></a><span class="sr">                var filters = queryStringParser.ParseFilterOperators&lt;Pokemon&gt;();</span>
+</span><span id="__span-5-45"><a id="__codelineno-5-45" name="__codelineno-5-45"></a><span class="sr">                var expression = FilterExpressionParser.ParsePredicate&lt;Pokemon&gt;(filters);</span>
+</span><span id="__span-5-46"><a id="__codelineno-5-46" name="__codelineno-5-46"></a><span class="sr">                var allTimesheets = _unitOfWork.Pokemons.Get(expression, pageNumber, pageSize, sortingCriteria);</span>
+</span><span id="__span-5-47"><a id="__codelineno-5-47" name="__codelineno-5-47"></a><span class="sr">                var total = _unitOfWork.Pokemons.Count(expression);</span>
+</span><span id="__span-5-48"><a id="__codelineno-5-48" name="__codelineno-5-48"></a><span class="sr">                ISearchResult&lt;Pokemon&gt; result = new SearchResult&lt;Pokemon&gt;(total, pageNumber, pageSize, sorting, allTimesheets);</span>
+</span><span id="__span-5-49"><a id="__codelineno-5-49" name="__codelineno-5-49"></a><span class="sr">                result.Items = allTimesheets;</span>
+</span><span id="__span-5-50"><a id="__codelineno-5-50" name="__codelineno-5-50"></a><span class="sr">                result.Total = total;</span>
+</span><span id="__span-5-51"><a id="__codelineno-5-51" name="__codelineno-5-51"></a><span class="sr">                result.PageNumber = pageNumber;</span>
+</span><span id="__span-5-52"><a id="__codelineno-5-52" name="__codelineno-5-52"></a><span class="sr">                result.PageSize = pageSize;</span>
+</span><span id="__span-5-53"><a id="__codelineno-5-53" name="__codelineno-5-53"></a><span class="sr">                return Task.FromResult(result);</span>
+</span><span id="__span-5-54"><a id="__codelineno-5-54" name="__codelineno-5-54"></a><span class="sr">            }</span>
+</span><span id="__span-5-55"><a id="__codelineno-5-55" name="__codelineno-5-55"></a><span class="sr">        }</span>
+</span><span id="__span-5-56"><a id="__codelineno-5-56" name="__codelineno-5-56"></a><span class="sr">    }</span>
+</span><span id="__span-5-57"><a id="__codelineno-5-57" name="__codelineno-5-57"></a><span class="sr">}</span>
+</span></code></pre></div></td></tr></table></div>
 
 
 
