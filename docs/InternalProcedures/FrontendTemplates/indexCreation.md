@@ -1,5 +1,17 @@
 # Creación de un Indice
 
+Si creaste tu plantilla, a partir del repositorio `apsys-mx/apsys.frontend.base.turkey`, asegúrate de tener estas carpetas para poder generar el index.
+
+- common
+- dataGrid
+- filters
+
+![Untitled](Resources/common.png)
+
+Abre la consola de visual:
+
+![Untitled](Resources/console.png)
+
 Instala los siguientes paquetes que contendrán lo requerido para el funcionamiento del Índice.
 
 - Install moment
@@ -29,6 +41,14 @@ npm install react-date-range
 #### **Archivo endpoint**
 
 Conecta el backend con el frontend, este proceso es diferente de acuerdo al proyecto.
+
+Para comprobar si el back esta conectado con el front entra ala carpeta `store` y ahi debe de aver una archivo donde se configura la url donde nos vamos a conectar al back.
+
+- ![Untitled](Resources/urlBack.png)
+
+Comprobamos si la url corresponde con la del back
+
+- ![Untitled](Resources/urlFront.png)
 
 Para obtener la información del index se debe generar un endpoint para realizar la petición de back.
 
