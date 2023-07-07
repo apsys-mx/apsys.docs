@@ -59,8 +59,8 @@ Como siguiente paso agregaremos las clases que usaremos para lalógica de nuestr
 
 El codigo que colocaremos dentro de la clase *Pokemon* sera el siguiente:
 
-```ruby linenums="1"
-namespace apsys.pokedex.products
+```ruby 
+namespace apsys.pokedex
 {
     public class Pokemon : AbstractDomainObject
     {
@@ -82,7 +82,7 @@ repositorios agregamos una nueva interfaz llamada *IPokemonRepository*.
 
 Se debe de insertar el siguinete codigo en la interfaz *IPokemonInterfaz*
 
-```ruby linenums="1"
+```ruby
 using apsys.pokedex;
 
 namespace apsys.pokedex.repositories
@@ -102,7 +102,7 @@ agregamos la clase *PokemonRepository*
 
 El codigo a insertar en la clase *PokemonRepository* es el siguiente:
 
-```ruby linenums="1"
+```ruby 
 using apsys.pokedex;
 using NHibernate;
 
@@ -120,85 +120,117 @@ namespace apsys.pokedex.repositories.nhibernate
 ```
 
 A continuación agregamos el repositorio de pokemons en la unidad de trabajo, para ello abrimos la interfaz *IUnitOfWork* que se encuentra en el proyecto de repositorios.
+En esta interfaz agregamos una linea de codigo para definir el repositorio de pokemons.
 
+![Untitled](Resources/24Unit-of-work-interface.png)
 
-<!-- Como siguiente paso debemos trabajar en la capa de datos y para ello primeramente haremos algunos cambios en la conexión a la base de datos. Se abre el archivo *runmigrations.bat* y *rollback.bat*
+Tambien debemos modificar la calse que implementa la interface de la unidad de trabajo, abrimos la clase *UnitOfWork*. En esta clase vamos a agregar dos lineas de codigo como se 
+puede ver en la siguiente imagen.
 
-![Untitled](Resources/15Migration-files%20(1).png)
+![Untitled](Resources/25Unit-of-work.png)
 
-En ambos archivos vamos a editar el nombre del ejecutable y de la base de datos de la siguiente manera:
-*runmigrations.bat*
+Posteriormente configuraremos el mapeo de nuestra API, para relacionar la clase *Pokemon* del dominio con la tabla ```[dbo].[Pokemon]``` de la base de datos, agregamos una nueva 
+llamada *PokemonMapper* en la carpeta *mappers* del proyecto de repositorios de *NHibernate*.
 
-![Untitled](Resources/16run-migrations.png)
+![Untitled](Resources/26Pokemon-mapper.png)
 
-![Untitled](Resources/17run-migrations-updated.png)
-
-*rollback.bat*
-
-![Untitled](Resources/18rollback.png)
-
-![Untitled](Resources/19rollback-updated.png)
-
-Buscaremos el archivo *runmigrations.bat* en el explorador de archivos y lo ejecutamos, al hacerlo se crearan algunas tablas adicionales en la base de datos.
-
-!!!nota
-    Por el momento no usaremos estas tablas, sin embargo son necesarias para poder terminar el tutorial. 
-
-<!-- El resultado de la ejecución será alfo similar a lo que se muestra en la siguiente imagen:
-
-
-
-Ahora crearemos la interfaz del repositorio que se ralaciona con la tabla de productos en la base de datos, en el proyecto de repositorios agregamos una nueva interfaz llamada *IProductsRepository*
-
-
-
-
+El codigo a insertar para la clase *PokemonMapper* sera:
 
 ```ruby
-using adventure.works.products;
 
-namespace adventure.works.repositories
+using NHibernate.Mapping.ByCode;
+using NHibernate.Mapping.ByCode.Conformist;
+
+namespace apsys.pokedex.repositories.nhibernate.mappers
 {
-    public interface IProductsRepository : IRepository<Product>
+    public class PokemonMapper : ClassMapping<Pokemon>
     {
-    }
-}
-```
-
-Siendo que la interfaz anterior solo define el contrato del repositorio ahora debemos crear una clase que implemente este repositorio, dicha clase la vamos a agregar en el proyecto de repositorios para Nhibernate.
-
-!!!info
-    El proceso a seguir para agregar una clase es el mismo que anteriormente se expuso con la clase *Producto*
-
-Agregamos la clase *ProductRepository*
-
-
-
-El código de la clase *ProductRepository* es el siguiente:
-
-```ruby
-using adventure.works.products;
-using NHibernate;
-
-namespace adventure.works.repositories.nhibernate
-{
-    public class ProductRepository : Repository<Product>, IProductsRepository
-    {
-        public ProductRepository(ISession session) 
-            : base(session)
+        public PokemonMapper()
         {
+            Table("Pokemons");
+            Id(x => x.Id, x =>
+            {
+                x.Generator(Generators.Assigned);
+                x.Column("Id");
+            });
+            Property(b => b.Code, x => { x.Column("Code"); });
+            Property(b => b.Name, x => { x.Column("Name"); });
         }
     }
 }
 
 ```
 
-Posteriormente agregamos el repositorio de produtos en la unidad de trabajo, para poder realizar esto abrimos la interfaz *IUnitOfWork* que se encuentra en el proyecto de repositorios.
-<!-- Img24 -->
-<!-- En esta interfaz agregaremos la linea de código siguiente, la cual define el repositorio de productos.
-<!-- # Img25 -->
-<!-- Por otra parte también deberemos modificar la clase que implementa la interfaz de la unidad de trabajo, tal que ahora vamos a abrir la clase *UnitOfWork* -->
-<!-- # Img26 -->
-<!-- En esta clase agregaremos dos lineas de código tal como se puede observar en la siguiente imagen: -->
-<!-- # Img27 -->
-<!-- Hay que configura el mapeo para relacionar la clase *Product* del dominio con la tabla ```[SalesLT].[Product]``` de la base de datos, agregamos una nueva clase llamada *ProductMapper* en la carpeta *mappers* del proyecto de repositorios de *NHibernate*. -->
+Hasta este punto hemos finalizado con la etapa que corresponde a los datos de nuestra API, por lo que pasaremos a la capa de servicios. Agregamos una clase
+llamada *PokemonsSearcher*, que se encargara de realizar la busqueda de pokemons en la base de datos, esta clase la agregaremos en el proyecto ```apsys.pokedex.services```
+
+![Untitled](Resources/27Pokemons-searcher.png)
+
+El codigo de nuestra clase *PokemonsSearcher* es el siguiente:
+
+```ruby
+using apsys.dynamic.filters;
+using apsys.pokedex.repositories;
+using MediatR;
+
+namespace apsys.pokedex.services
+{
+    public static class PokemonsSearcher
+    {
+        public static Query CreateCommand(string queryString)
+            => new Query(queryString);
+
+        /// <summary>
+        /// Command class
+        /// </summary>
+        public class Query : SearchQuery, IRequest<ISearchResult<Pokemon>>
+        {
+            public Query(string queryString)
+            {
+                QueryString = queryString;
+            }
+        }
+
+        public class Handler : IRequestHandler<Query, ISearchResult<Pokemon>>
+        {
+            private readonly IUnitOfWork _unitOfWork;
+
+            /// <summary>
+            /// Constructor
+            /// </summary>
+            /// <param name="uoW"></param>
+            /// <param name="pipeline"></param>
+            public Handler(IUnitOfWork uoW)
+            {
+                _unitOfWork = uoW;
+            }
+
+            public Task<ISearchResult<Pokemon>> Handle(Query request, CancellationToken cancellationToken)
+            {
+                QueryStringParser queryStringParser = new QueryStringParser(request.QueryString);
+                int pageNumber = queryStringParser.ParsePageNumber();
+                int pageSize = queryStringParser.ParsePageSize();
+                Sorting sorting = queryStringParser.ParseSorting<Pokemon>(nameof(Pokemon.Name));
+                SortingCriteria sortingCriteria = new SortingCriteria(sorting.By, sorting.Direction == "desc" ? SortingCriteriaType.Descending : SortingCriteriaType.Ascending);
+                var filters = queryStringParser.ParseFilterOperators<Pokemon>();
+                var expression = FilterExpressionParser.ParsePredicate<Pokemon>(filters);
+                var allTimesheets = _unitOfWork.Pokemons.Get(expression, pageNumber, pageSize, sortingCriteria);
+                var total = _unitOfWork.Pokemons.Count(expression);
+                ISearchResult<Pokemon> result = new SearchResult<Pokemon>(total, pageNumber, pageSize, sorting, allTimesheets);
+                result.Items = allTimesheets;
+                result.Total = total;
+                result.PageNumber = pageNumber;
+                result.PageSize = pageSize;
+                return Task.FromResult(result);
+            }
+        }
+    }
+}
+```
+
+Para el último tramo de este tutorial trabajaremos en la capa correspondiente a la *webapi* para codificar el  *endpoint* que nos permitira obtener los datos de los pokemons.
+Iniciamos creando el controlador *PokemonsController* en la carpeta de controladores del proyecto ```apsys.pokedex.webapi```
+
+![Untitled](Resources/28Pokemons-controller.png)
+
+
