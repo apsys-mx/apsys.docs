@@ -730,8 +730,8 @@ proyecto llamado apsys.pokedex</p>
 <p>La primera capa que trabajaremos sera la que corresponde al dominio. </p>
 <p>Como siguiente paso agregaremos las clases que usaremos para lalógica de nuestra aplicación. La primera de ellas sera la clase que va a representar un producto de la aplicación y dicha clase la nombraremos <em>Pokemon</em>.</p>
 <p><img alt="Untitled" src="../Resources/13Create-class.png" /></p>
-<p><img alt="Untitled" src="../Resources/14BRefactor-base-class.png" /></p>
-<p>El codigo que colocaremos dentro de la clase creada sera el siguiente:</p>
+<p><img alt="Untitled" src="../Resources/14Create-class.png" /></p>
+<p>El codigo que colocaremos dentro de la clase <em>Pokemon</em> sera el siguiente:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
 <span class="normal"><a href="#__codelineno-1-2">2</a></span>
 <span class="normal"><a href="#__codelineno-1-3">3</a></span>
@@ -749,7 +749,60 @@ proyecto llamado apsys.pokedex</p>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <p>Debido a que el <em>id</em> del pokemon es un entero en la base de datos vamos a modificar la clase AbstractDomainObject para quede de la siguiente manera:</p>
-<p>Por el momento solo agregaremos este bloque de codigo en la clase, ya que para este punto nuestro objetivo es configurar la conexión con nuestra base de datos.</p>
+<p><img alt="Untitled" src="../Resources/14BRefactor-base-class.png" /></p>
+<p>Por el momento solo agregaremos este bloque de codigo en la clase, continuamos en el siguiente paso.</p>
+<p>Lo siguiente sera trabajar en nuestra capa de datos. Primero crearemos la interfaz del repositorio que se relaciona con la tabla de pokemons en la base de datos, en el proyecto de
+repositorios agregamos una nueva interfaz llamada <em>IPokemonRepository</em>.</p>
+<p><img alt="Untitled" src="../Resources/21Pokemons-interface.png" /></p>
+<p><img alt="Untitled" src="../Resources/22Pokemons-interface.png" /></p>
+<p>Se debe de insertar el siguinete codigo en la interfaz <em>IPokemonInterfaz</em></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span>
+<span class="normal"><a href="#__codelineno-2-7">7</a></span>
+<span class="normal"><a href="#__codelineno-2-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="n">using</span> <span class="n">apsys</span><span class="o">.</span><span class="n">pokedex</span><span class="p">;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="n">namespace</span> <span class="n">apsys</span><span class="o">.</span><span class="n">pokedex</span><span class="o">.</span><span class="n">repositories</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="p">{</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5"></a>    <span class="kp">public</span> <span class="n">interface</span> <span class="no">IPokemonsRepository</span> <span class="p">:</span> <span class="no">IRepository</span><span class="o">&lt;</span><span class="no">Pokemon</span><span class="o">&gt;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6"></a>    <span class="p">{</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7"></a>    <span class="p">}</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="p">}</span>
+</span></code></pre></div></td></tr></table></div>
+<p>Siendo que la interfaz mencionada solo define el contrato del repositorio ahora debemos crear una clase que implemente este repositorio, dicha clase la vamos a agregar en
+el proyecto de repositorios para <em>NHibernate</em> (el proceso a seguir para agregar una clase es el mismo que anteriormente presentamos en este tutorial con la clase <em>Pokemon</em>), 
+agregamos la clase <em>PokemonRepository</em></p>
+<p><img alt="Untitled" src="../Resources/23Pokemons-repository.png" /></p>
+<p>El codigo a insertar en la clase <em>PokemonRepository</em> es el siguiente:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="n">using</span> <span class="n">apsys</span><span class="o">.</span><span class="n">pokedex</span><span class="p">;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="n">using</span> <span class="no">NHibernate</span><span class="p">;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="n">namespace</span> <span class="n">apsys</span><span class="o">.</span><span class="n">pokedex</span><span class="o">.</span><span class="n">repositories</span><span class="o">.</span><span class="n">nhibernate</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="p">{</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6"></a>    <span class="kp">public</span> <span class="k">class</span> <span class="nc">PokemonsRepository</span> <span class="p">:</span> <span class="no">Repository</span><span class="o">&lt;</span><span class="no">Pokemon</span><span class="o">&gt;</span><span class="p">,</span> <span class="no">IPokemonsRepository</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7"></a>    <span class="p">{</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8"></a>        <span class="kp">public</span> <span class="no">PokemonsRepository</span><span class="p">(</span><span class="no">ISession</span> <span class="n">session</span><span class="p">)</span> 
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9"></a>            <span class="p">:</span> <span class="n">base</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10"></a>        <span class="p">{</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11"></a>        <span class="p">}</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="p">}</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="p">}</span>
+</span></code></pre></div></td></tr></table></div>
 <!-- Como siguiente paso debemos trabajar en la capa de datos y para ello primeramente haremos algunos cambios en la conexión a la base de datos. Se abre el archivo *runmigrations.bat* y *rollback.bat*
 
 ![Untitled](Resources/15Migration-files%20(1).png)
@@ -782,14 +835,14 @@ Ahora crearemos la interfaz del repositorio que se ralaciona con la tabla de pro
 
 
 
-<div class="highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">using</span> <span class="n">adventure</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">products</span><span class="p">;</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">namespace</span> <span class="n">adventure</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">repositories</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">{</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="kp">public</span> <span class="n">interface</span> <span class="no">IProductsRepository</span> <span class="p">:</span> <span class="no">IRepository</span><span class="o">&lt;</span><span class="no">Product</span><span class="o">&gt;</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="p">{</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="p">}</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">using</span> <span class="n">adventure</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">products</span><span class="p">;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">namespace</span> <span class="n">adventure</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">repositories</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">{</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="kp">public</span> <span class="n">interface</span> <span class="no">IProductsRepository</span> <span class="p">:</span> <span class="no">IRepository</span><span class="o">&lt;</span><span class="no">Product</span><span class="o">&gt;</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="p">{</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="p">}</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">}</span>
 </span></code></pre></div>
 
 Siendo que la interfaz anterior solo define el contrato del repositorio ahora debemos crear una clase que implemente este repositorio, dicha clase la vamos a agregar en el proyecto de repositorios para Nhibernate.
@@ -803,19 +856,19 @@ Agregamos la clase *ProductRepository*
 
 El código de la clase *ProductRepository* es el siguiente:
 
-<div class="highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">using</span> <span class="n">adventure</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">products</span><span class="p">;</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">using</span> <span class="no">NHibernate</span><span class="p">;</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">namespace</span> <span class="n">adventure</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">repositories</span><span class="o">.</span><span class="n">nhibernate</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">{</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="kp">public</span> <span class="k">class</span> <span class="nc">ProductRepository</span> <span class="p">:</span> <span class="no">Repository</span><span class="o">&lt;</span><span class="no">Product</span><span class="o">&gt;</span><span class="p">,</span> <span class="no">IProductsRepository</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="p">{</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        <span class="kp">public</span> <span class="no">ProductRepository</span><span class="p">(</span><span class="no">ISession</span> <span class="n">session</span><span class="p">)</span> 
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>            <span class="p">:</span> <span class="n">base</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>        <span class="p">{</span>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        <span class="p">}</span>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="p">}</span>
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">using</span> <span class="n">adventure</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">products</span><span class="p">;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">using</span> <span class="no">NHibernate</span><span class="p">;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">namespace</span> <span class="n">adventure</span><span class="o">.</span><span class="n">works</span><span class="o">.</span><span class="n">repositories</span><span class="o">.</span><span class="n">nhibernate</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">{</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="kp">public</span> <span class="k">class</span> <span class="nc">ProductRepository</span> <span class="p">:</span> <span class="no">Repository</span><span class="o">&lt;</span><span class="no">Product</span><span class="o">&gt;</span><span class="p">,</span> <span class="no">IProductsRepository</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="p">{</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>        <span class="kp">public</span> <span class="no">ProductRepository</span><span class="p">(</span><span class="no">ISession</span> <span class="n">session</span><span class="p">)</span> 
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>            <span class="p">:</span> <span class="n">base</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>        <span class="p">{</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="p">}</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="p">}</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="p">}</span>
 </span></code></pre></div>
 
 Posteriormente agregamos el repositorio de produtos en la unidad de trabajo, para poder realizar esto abrimos la interfaz *IUnitOfWork* que se encuentra en el proyecto de repositorios.
