@@ -42,7 +42,7 @@ npm install react-date-range
 
 Conecta el backend con el frontend, este proceso es diferente de acuerdo al proyecto.
 
-Para comprobar si el back esta conectado con el front entra ala carpeta `store` y ahi debe de aver una archivo donde se configura la url donde nos vamos a conectar al back.
+Para comprobar si el back está conectado con el front entra a la carpeta `store` y ahí debe de haber una archivo donde se configura la URL donde nos vamos a conectar al back.
 
 - ![Untitled](Resources/urlBack.png)
 
@@ -54,30 +54,44 @@ Comprobamos si la URL corresponde con la del back:
 
 Para obtener la información del index se debe generar un endpoint para realizar la petición de back.
 
-Si no existe el archivo donde se configuran los endpoints crea uno para comenzar a crear los métodos donde vamos a obtener la información del back y los catálogos para los filtros.
+Si no existe el archivo donde se configuran los endpoints, crea uno para comenzar a crear los métodos donde vamos a obtener la información del back y los catálogos para los filtros.
+
+Creada a partir del modulo a trabajar, para este ejemplo seria: `>home.endPoints.js`
+
+- ![Untitled](Resources/endPoint.png)
 
 Estructura del endpoint para obtener la información aplicando paginado, filtros y ordenamiento.
 
+- Especificamos por la columna se va a ordenar la información. En el ejemplo indicamos =>`CreationDate`
+
 ```ruby linenums="1"
-getTimesheets: builder.query({
-			query(params) {
-				const { sorting, pagination, filters } = params
-				var { sortBy, sortDirection } = sorting
-				var { pageNumber, pageSize } = pagination
-				pageNumber = pageNumber ? pageNumber : 0
-				pageSize = pageSize ? pageSize : 0
-				sortDirection = sortDirection && sortDirection.length > 0 ? sortDirection : 'desc'
-				sortBy = sortBy && sortBy.length > 0 ? sortBy : 'projectName'
-				var url = `Timesheets?sortBy=${sortBy}&sortDirection=${sortDirection}&pageNumber=${pageNumber}&pageSize=${pageSize}&${filters}`
-				return {
-					url: url,
-					method: 'GET',
-				}
-			},
-		}),
+import { timesheetsApi } from '../../store/timesheet-api'
+export const timesheetsEndPoint = timesheetsApi.injectEndpoints({
+    endpoints: (builder) => ({
+        getTimesheets: builder.query({
+            query(params) {
+                const { sorting, pagination, filters } = params
+                var { sortBy, sortDirection } = sorting
+                var { pageNumber, pageSize } = pagination
+                pageNumber = pageNumber ? pageNumber : 0
+                pageSize = pageSize ? pageSize : 0
+                sortDirection = sortDirection && sortDirection.length > 0 ? sortDirection : 'desc'
+                sortBy = sortBy && sortBy.length > 0 ? sortBy : 'projectName'
+                var url = `Timesheets?sortBy=${sortBy}&sortDirection=${sortDirection}&pageNumber=${pageNumber}&pageSize=${pageSize}&${filters}`
+                return {
+                    url: url,
+                    method: 'GET',
+                }
+            },
+        }),
+
+    }),
+    overrideExisting: true,
+})
+export const { useGetTimesheetsQuery, useGetCatalogsQuery } = timesheetsEndPoint
 ```
 
-Agregamos un endpoint para obtener la lista de catálogo para aplicar en los filtros con el nombre `getCatalogs`:
+Adicional se agrega un endpoint para obtener la lista de catálogo para aplicar en los filtros con el nombre `getCatalogs`:
 
 ```ruby linenums="1"
 getCatalogs: builder.query({
@@ -92,8 +106,15 @@ getCatalogs: builder.query({
 
 #### **Archivo Slice **
 
-- un archivo donde se encuentre la configuración del initialState: donde contendrá paginación, sorting, filtros.
+-El achivo Slice es aquel donde se encuentra la configuración del initialState: La cual contiene paginación, ordenamiento y filtros.
+
 - El listado de reducers: Para la actualización de initialState.
+
+Si no existe el archivo slice, crea uno para configurar el initialState.
+
+- ![Untitled](Resources/slice.png)
+
+-En caso de que exista agregar los metodos faltantes.
 
 ```ruby linenums="1"
 
@@ -119,6 +140,7 @@ const initialState = {
 
 	filters: '',
 }
+
 
 export const homeSlice = createSlice({
 	name: 'homeSlice',
@@ -157,6 +179,10 @@ export default homeSlice.reducer
 
 - Archivos que contenga los Selectors: Donde obtendremos la información initialState
 
+- Si no existe el archivo selectors, crea uno y agrega los metodos faltantes
+
+- ![Untitled](Resources/selectors.png)
+
 ```ruby linenums="1"
 import { createSelector } from 'reselect'
 
@@ -188,6 +214,8 @@ Para generar la tabla, es necesario revisar si contamos con los siguientes archi
 ### **Crear configuración de tabla**
 
 Crear el archivo 'configurationTable.jsx'
+
+- ![Untitled](Resources/configurationTable.png)
 
 Este archivo contiene la confirmación de las columnas que se mostraran en la tabla:
 
@@ -222,7 +250,13 @@ export const defaultTableConfigurationTimeSheets = [
 
 Genera un nuevo archivo con el nombre de la tabla, en este documento importarás la configuración anterior de la tabla, así como el archivo de datagrid ya configurado en el proyecto base.
 
+![Untitled](Resources/home.png)
+
 - Es nesario llamar los selectors para obtener el paginado, ordenamiento y filtros:
+
+```ruby linenums="1"
+import * as selectors from '../home.selectors'
+```
 
 ```ruby linenums="1"
 	const viewPaginationState = useSelector((state) => selectors.getPagination(state))
