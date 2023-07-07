@@ -46,9 +46,11 @@ Para comprobar si el back esta conectado con el front entra ala carpeta `store` 
 
 - ![Untitled](Resources/urlBack.png)
 
-Comprobamos si la url corresponde con la del back
+Comprobamos si la URL corresponde con la del back:
 
 - ![Untitled](Resources/urlFront.png)
+
+## Configuración del api Slice
 
 Para obtener la información del index se debe generar un endpoint para realizar la petición de back.
 
