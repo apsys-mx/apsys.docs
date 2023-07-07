@@ -543,13 +543,21 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#configuracion-del-api-slice" class="md-nav__link">
+    Configuración del api Slice
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuración del api Slice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#crear-configuracion-de-tabla" class="md-nav__link">
     Crear configuración de tabla
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#creacion-de-la-tabla-index" class="md-nav__link">
     Creación de la tabla index
   </a>
@@ -575,6 +583,11 @@
   <a href="#implementar-datagrid" class="md-nav__link">
     Implementar DataGrid
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -703,13 +716,21 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#configuracion-del-api-slice" class="md-nav__link">
+    Configuración del api Slice
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuración del api Slice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#crear-configuracion-de-tabla" class="md-nav__link">
     Crear configuración de tabla
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#creacion-de-la-tabla-index" class="md-nav__link">
     Creación de la tabla index
   </a>
@@ -742,6 +763,11 @@
     </nav>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
     </ul>
   
@@ -759,6 +785,15 @@
 
 
 <h1 id="creacion-de-un-indice">Creación de un Indice</h1>
+<p>Si creaste tu plantilla, a partir del repositorio <code>apsys-mx/apsys.frontend.base.turkey</code>, asegúrate de tener estas carpetas para poder generar el index.</p>
+<ul>
+<li>common</li>
+<li>dataGrid</li>
+<li>filters</li>
+</ul>
+<p><img alt="Untitled" src="../Resources/common.png" /></p>
+<p>Abre la consola de visual:</p>
+<p><img alt="Untitled" src="../Resources/console.png" /></p>
 <p>Instala los siguientes paquetes que contendrán lo requerido para el funcionamiento del Índice.</p>
 <ul>
 <li>Install moment</li>
@@ -782,6 +817,15 @@
 </span></code></pre></div></td></tr></table></div>
 <h4 id="archivo-endpoint"><strong>Archivo endpoint</strong></h4>
 <p>Conecta el backend con el frontend, este proceso es diferente de acuerdo al proyecto.</p>
+<p>Para comprobar si el back esta conectado con el front entra ala carpeta <code>store</code> y ahi debe de aver una archivo donde se configura la url donde nos vamos a conectar al back.</p>
+<ul>
+<li><img alt="Untitled" src="../Resources/urlBack.png" /></li>
+</ul>
+<p>Comprobamos si la URL corresponde con la del back:</p>
+<ul>
+<li><img alt="Untitled" src="../Resources/urlFront.png" /></li>
+</ul>
+<h2 id="configuracion-del-api-slice">Configuración del api Slice</h2>
 <p>Para obtener la información del index se debe generar un endpoint para realizar la petición de back.</p>
 <p>Ejemplo de la estructura del endpoint al back aplicando paginado, ordenamiento y filtros:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
