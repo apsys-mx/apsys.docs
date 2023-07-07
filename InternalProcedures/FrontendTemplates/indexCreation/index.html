@@ -817,7 +817,7 @@
 </span></code></pre></div></td></tr></table></div>
 <h4 id="archivo-endpoint"><strong>Archivo endpoint</strong></h4>
 <p>Conecta el backend con el frontend, este proceso es diferente de acuerdo al proyecto.</p>
-<p>Para comprobar si el back esta conectado con el front entra ala carpeta <code>store</code> y ahi debe de aver una archivo donde se configura la url donde nos vamos a conectar al back.</p>
+<p>Para comprobar si el back está conectado con el front entra a la carpeta <code>store</code> y ahí debe de haber una archivo donde se configura la URL donde nos vamos a conectar al back.</p>
 <ul>
 <li><img alt="Untitled" src="../Resources/urlBack.png" /></li>
 </ul>
@@ -827,8 +827,15 @@
 </ul>
 <h2 id="configuracion-del-api-slice">Configuración del api Slice</h2>
 <p>Para obtener la información del index se debe generar un endpoint para realizar la petición de back.</p>
-<p>Si no existe el archivo donde se configuran los endpoints crea uno para comenzar a crear los métodos donde vamos a obtener la información del back y los catálogos para los filtros.</p>
+<p>Si no existe el archivo donde se configuran los endpoints, crea uno para comenzar a crear los métodos donde vamos a obtener la información del back y los catálogos para los filtros.</p>
+<p>Creada a partir del modulo a trabajar, para este ejemplo seria: <code>&gt;home.endPoints.js</code></p>
+<ul>
+<li><img alt="Untitled" src="../Resources/endPoint.png" /></li>
+</ul>
 <p>Estructura del endpoint para obtener la información aplicando paginado, filtros y ordenamiento.</p>
+<ul>
+<li>Especificamos por la columna se va a ordenar la información. En el ejemplo indicamos =&gt;<code>CreationDate</code></li>
+</ul>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
@@ -844,24 +851,40 @@
 <span class="normal"><a href="#__codelineno-4-13">13</a></span>
 <span class="normal"><a href="#__codelineno-4-14">14</a></span>
 <span class="normal"><a href="#__codelineno-4-15">15</a></span>
-<span class="normal"><a href="#__codelineno-4-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="ss">getTimesheets</span><span class="p">:</span> <span class="n">builder</span><span class="o">.</span><span class="n">query</span><span class="p">({</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2"></a>            <span class="n">query</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="p">{</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3"></a>                <span class="n">const</span> <span class="p">{</span> <span class="n">sorting</span><span class="p">,</span> <span class="n">pagination</span><span class="p">,</span> <span class="n">filters</span> <span class="p">}</span> <span class="o">=</span> <span class="n">params</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4"></a>                <span class="n">var</span> <span class="p">{</span> <span class="n">sortBy</span><span class="p">,</span> <span class="n">sortDirection</span> <span class="p">}</span> <span class="o">=</span> <span class="n">sorting</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5"></a>                <span class="n">var</span> <span class="p">{</span> <span class="n">pageNumber</span><span class="p">,</span> <span class="n">pageSize</span> <span class="p">}</span> <span class="o">=</span> <span class="n">pagination</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6"></a>                <span class="n">pageNumber</span> <span class="o">=</span> <span class="n">pageNumber</span> <span class="p">?</span> <span class="n">pageNumber</span> <span class="p">:</span> <span class="mi">0</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7"></a>                <span class="n">pageSize</span> <span class="o">=</span> <span class="n">pageSize</span> <span class="p">?</span> <span class="n">pageSize</span> <span class="p">:</span> <span class="mi">0</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8"></a>                <span class="n">sortDirection</span> <span class="o">=</span> <span class="n">sortDirection</span> <span class="o">&amp;&amp;</span> <span class="n">sortDirection</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">sortDirection</span> <span class="p">:</span> <span class="s1">&#39;desc&#39;</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9"></a>                <span class="n">sortBy</span> <span class="o">=</span> <span class="n">sortBy</span> <span class="o">&amp;&amp;</span> <span class="n">sortBy</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">sortBy</span> <span class="p">:</span> <span class="s1">&#39;projectName&#39;</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10"></a>                <span class="n">var</span> <span class="n">url</span> <span class="o">=</span> <span class="sb">`Timesheets?sortBy=${sortBy}&amp;sortDirection=${sortDirection}&amp;pageNumber=${pageNumber}&amp;pageSize=${pageSize}&amp;${filters}`</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11"></a>                <span class="k">return</span> <span class="p">{</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12"></a>                    <span class="ss">url</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span>
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13"></a>                    <span class="nb">method</span><span class="p">:</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
-</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14"></a>                <span class="p">}</span>
-</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15"></a>            <span class="p">},</span>
-</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16"></a>        <span class="p">}),</span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span>
+<span class="normal"><a href="#__codelineno-4-21">21</a></span>
+<span class="normal"><a href="#__codelineno-4-22">22</a></span>
+<span class="normal"><a href="#__codelineno-4-23">23</a></span>
+<span class="normal"><a href="#__codelineno-4-24">24</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="n">import</span> <span class="p">{</span> <span class="n">timesheetsApi</span> <span class="p">}</span> <span class="n">from</span> <span class="s1">&#39;../../store/timesheet-api&#39;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="n">export</span> <span class="n">const</span> <span class="n">timesheetsEndPoint</span> <span class="o">=</span> <span class="n">timesheetsApi</span><span class="o">.</span><span class="n">injectEndpoints</span><span class="p">({</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3"></a>    <span class="ss">endpoints</span><span class="p">:</span> <span class="p">(</span><span class="n">builder</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4"></a>        <span class="ss">getTimesheets</span><span class="p">:</span> <span class="n">builder</span><span class="o">.</span><span class="n">query</span><span class="p">({</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5"></a>            <span class="n">query</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="p">{</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6"></a>                <span class="n">const</span> <span class="p">{</span> <span class="n">sorting</span><span class="p">,</span> <span class="n">pagination</span><span class="p">,</span> <span class="n">filters</span> <span class="p">}</span> <span class="o">=</span> <span class="n">params</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7"></a>                <span class="n">var</span> <span class="p">{</span> <span class="n">sortBy</span><span class="p">,</span> <span class="n">sortDirection</span> <span class="p">}</span> <span class="o">=</span> <span class="n">sorting</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8"></a>                <span class="n">var</span> <span class="p">{</span> <span class="n">pageNumber</span><span class="p">,</span> <span class="n">pageSize</span> <span class="p">}</span> <span class="o">=</span> <span class="n">pagination</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9"></a>                <span class="n">pageNumber</span> <span class="o">=</span> <span class="n">pageNumber</span> <span class="p">?</span> <span class="n">pageNumber</span> <span class="p">:</span> <span class="mi">0</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10"></a>                <span class="n">pageSize</span> <span class="o">=</span> <span class="n">pageSize</span> <span class="p">?</span> <span class="n">pageSize</span> <span class="p">:</span> <span class="mi">0</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11"></a>                <span class="n">sortDirection</span> <span class="o">=</span> <span class="n">sortDirection</span> <span class="o">&amp;&amp;</span> <span class="n">sortDirection</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">sortDirection</span> <span class="p">:</span> <span class="s1">&#39;desc&#39;</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12"></a>                <span class="n">sortBy</span> <span class="o">=</span> <span class="n">sortBy</span> <span class="o">&amp;&amp;</span> <span class="n">sortBy</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">sortBy</span> <span class="p">:</span> <span class="s1">&#39;projectName&#39;</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13"></a>                <span class="n">var</span> <span class="n">url</span> <span class="o">=</span> <span class="sb">`Timesheets?sortBy=${sortBy}&amp;sortDirection=${sortDirection}&amp;pageNumber=${pageNumber}&amp;pageSize=${pageSize}&amp;${filters}`</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14"></a>                <span class="k">return</span> <span class="p">{</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15"></a>                    <span class="ss">url</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16"></a>                    <span class="nb">method</span><span class="p">:</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17"></a>                <span class="p">}</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18"></a>            <span class="p">},</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19"></a>        <span class="p">}),</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20"></a>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21"></a>    <span class="p">}),</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22"></a>    <span class="ss">overrideExisting</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23"></a><span class="p">})</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24"></a><span class="n">export</span> <span class="n">const</span> <span class="p">{</span> <span class="n">useGetTimesheetsQuery</span><span class="p">,</span> <span class="n">useGetCatalogsQuery</span> <span class="p">}</span> <span class="o">=</span> <span class="n">timesheetsEndPoint</span>
 </span></code></pre></div></td></tr></table></div>
-<p>Agregamos un endpoint para obtener la lista de catálogo para aplicar en los filtros con el nombre <code>getCatalogs</code>:</p>
+<p>Adicional se agrega un endpoint para obtener la lista de catálogo para aplicar en los filtros con el nombre <code>getCatalogs</code>:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
 <span class="normal"><a href="#__codelineno-5-2">2</a></span>
 <span class="normal"><a href="#__codelineno-5-3">3</a></span>
@@ -879,10 +902,15 @@
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8"></a>        <span class="p">}),</span>
 </span></code></pre></div></td></tr></table></div>
 <h4 id="archivo-slice"><strong>Archivo Slice </strong></h4>
+<p>-El achivo Slice es aquel donde se encuentra la configuración del initialState: La cual contiene paginación, ordenamiento y filtros.</p>
 <ul>
-<li>un archivo donde se encuentre la configuración del initialState: donde contendrá paginación, sorting, filtros.</li>
 <li>El listado de reducers: Para la actualización de initialState.</li>
 </ul>
+<p>Si no existe el archivo slice, crea uno para configurar el initialState.</p>
+<ul>
+<li><img alt="Untitled" src="../Resources/slice.png" /></li>
+</ul>
+<p>-En caso de que exista agregar los metodos faltantes.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
@@ -936,7 +964,8 @@
 <span class="normal"><a href="#__codelineno-6-51">51</a></span>
 <span class="normal"><a href="#__codelineno-6-52">52</a></span>
 <span class="normal"><a href="#__codelineno-6-53">53</a></span>
-<span class="normal"><a href="#__codelineno-6-54">54</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="n">import</span> <span class="p">{</span> <span class="n">createSlice</span> <span class="p">}</span> <span class="n">from</span> <span class="s1">&#39;@reduxjs/toolkit&#39;</span>
+<span class="normal"><a href="#__codelineno-6-54">54</a></span>
+<span class="normal"><a href="#__codelineno-6-55">55</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="n">import</span> <span class="p">{</span> <span class="n">createSlice</span> <span class="p">}</span> <span class="n">from</span> <span class="s1">&#39;@reduxjs/toolkit&#39;</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2"></a>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="n">const</span> <span class="n">defaultToasterState</span> <span class="o">=</span> <span class="p">{</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4"></a>    <span class="nb">open</span><span class="p">:</span> <span class="kp">false</span><span class="p">,</span>
@@ -959,41 +988,50 @@
 </span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21"></a>    <span class="ss">filters</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
 </span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22"></a><span class="p">}</span>
 </span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23"></a>
-</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24"></a><span class="n">export</span> <span class="n">const</span> <span class="n">homeSlice</span> <span class="o">=</span> <span class="n">createSlice</span><span class="p">({</span>
-</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25"></a>    <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;homeSlice&#39;</span><span class="p">,</span>
-</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26"></a>    <span class="n">initialState</span><span class="p">,</span>
-</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27"></a>    <span class="ss">reducers</span><span class="p">:</span> <span class="p">{</span>
-</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28"></a>        <span class="ss">setPageNumber</span><span class="p">:</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29"></a>            <span class="n">state</span><span class="o">.</span><span class="n">pagination</span><span class="o">.</span><span class="n">page</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">payload</span>
-</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30"></a>        <span class="p">},</span>
-</span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31"></a>        <span class="ss">setPageSize</span><span class="p">:</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span id="__span-6-32"><a id="__codelineno-6-32" name="__codelineno-6-32"></a>            <span class="n">state</span><span class="o">.</span><span class="n">pagination</span><span class="o">.</span><span class="n">rowsPerPage</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">payload</span>
-</span><span id="__span-6-33"><a id="__codelineno-6-33" name="__codelineno-6-33"></a>        <span class="p">},</span>
-</span><span id="__span-6-34"><a id="__codelineno-6-34" name="__codelineno-6-34"></a>        <span class="ss">setSorting</span><span class="p">:</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span id="__span-6-35"><a id="__codelineno-6-35" name="__codelineno-6-35"></a>            <span class="n">state</span><span class="o">.</span><span class="n">sorting</span><span class="o">.</span><span class="n">sortBy</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">sortBy</span>
-</span><span id="__span-6-36"><a id="__codelineno-6-36" name="__codelineno-6-36"></a>            <span class="n">state</span><span class="o">.</span><span class="n">sorting</span><span class="o">.</span><span class="n">sortDirection</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">sortDirection</span>
-</span><span id="__span-6-37"><a id="__codelineno-6-37" name="__codelineno-6-37"></a>        <span class="p">},</span>
-</span><span id="__span-6-38"><a id="__codelineno-6-38" name="__codelineno-6-38"></a>        <span class="ss">setFilter</span><span class="p">:</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span id="__span-6-39"><a id="__codelineno-6-39" name="__codelineno-6-39"></a>            <span class="n">state</span><span class="o">.</span><span class="n">filters</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">payload</span>
-</span><span id="__span-6-40"><a id="__codelineno-6-40" name="__codelineno-6-40"></a>        <span class="p">},</span>
-</span><span id="__span-6-41"><a id="__codelineno-6-41" name="__codelineno-6-41"></a>
-</span><span id="__span-6-42"><a id="__codelineno-6-42" name="__codelineno-6-42"></a>    <span class="p">},</span>
-</span><span id="__span-6-43"><a id="__codelineno-6-43" name="__codelineno-6-43"></a><span class="p">})</span>
-</span><span id="__span-6-44"><a id="__codelineno-6-44" name="__codelineno-6-44"></a>
-</span><span id="__span-6-45"><a id="__codelineno-6-45" name="__codelineno-6-45"></a><span class="n">export</span> <span class="n">const</span> <span class="p">{</span>
-</span><span id="__span-6-46"><a id="__codelineno-6-46" name="__codelineno-6-46"></a>    <span class="n">setTitle</span><span class="p">,</span>
-</span><span id="__span-6-47"><a id="__codelineno-6-47" name="__codelineno-6-47"></a>    <span class="n">setToasterState</span><span class="p">,</span>
-</span><span id="__span-6-48"><a id="__codelineno-6-48" name="__codelineno-6-48"></a>    <span class="n">setPageNumber</span><span class="p">,</span>
-</span><span id="__span-6-49"><a id="__codelineno-6-49" name="__codelineno-6-49"></a>    <span class="n">setPageSize</span><span class="p">,</span>
-</span><span id="__span-6-50"><a id="__codelineno-6-50" name="__codelineno-6-50"></a>    <span class="n">setSorting</span><span class="p">,</span>
-</span><span id="__span-6-51"><a id="__codelineno-6-51" name="__codelineno-6-51"></a>    <span class="n">setFilter</span><span class="p">,</span>
-</span><span id="__span-6-52"><a id="__codelineno-6-52" name="__codelineno-6-52"></a>
-</span><span id="__span-6-53"><a id="__codelineno-6-53" name="__codelineno-6-53"></a><span class="p">}</span> <span class="o">=</span> <span class="n">homeSlice</span><span class="o">.</span><span class="n">actions</span>
-</span><span id="__span-6-54"><a id="__codelineno-6-54" name="__codelineno-6-54"></a><span class="n">export</span> <span class="n">default</span> <span class="n">homeSlice</span><span class="o">.</span><span class="n">reducer</span>
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24"></a>
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25"></a><span class="n">export</span> <span class="n">const</span> <span class="n">homeSlice</span> <span class="o">=</span> <span class="n">createSlice</span><span class="p">({</span>
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26"></a>    <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;homeSlice&#39;</span><span class="p">,</span>
+</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27"></a>    <span class="n">initialState</span><span class="p">,</span>
+</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28"></a>    <span class="ss">reducers</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29"></a>        <span class="ss">setPageNumber</span><span class="p">:</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30"></a>            <span class="n">state</span><span class="o">.</span><span class="n">pagination</span><span class="o">.</span><span class="n">page</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">payload</span>
+</span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31"></a>        <span class="p">},</span>
+</span><span id="__span-6-32"><a id="__codelineno-6-32" name="__codelineno-6-32"></a>        <span class="ss">setPageSize</span><span class="p">:</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span id="__span-6-33"><a id="__codelineno-6-33" name="__codelineno-6-33"></a>            <span class="n">state</span><span class="o">.</span><span class="n">pagination</span><span class="o">.</span><span class="n">rowsPerPage</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">payload</span>
+</span><span id="__span-6-34"><a id="__codelineno-6-34" name="__codelineno-6-34"></a>        <span class="p">},</span>
+</span><span id="__span-6-35"><a id="__codelineno-6-35" name="__codelineno-6-35"></a>        <span class="ss">setSorting</span><span class="p">:</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span id="__span-6-36"><a id="__codelineno-6-36" name="__codelineno-6-36"></a>            <span class="n">state</span><span class="o">.</span><span class="n">sorting</span><span class="o">.</span><span class="n">sortBy</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">sortBy</span>
+</span><span id="__span-6-37"><a id="__codelineno-6-37" name="__codelineno-6-37"></a>            <span class="n">state</span><span class="o">.</span><span class="n">sorting</span><span class="o">.</span><span class="n">sortDirection</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">sortDirection</span>
+</span><span id="__span-6-38"><a id="__codelineno-6-38" name="__codelineno-6-38"></a>        <span class="p">},</span>
+</span><span id="__span-6-39"><a id="__codelineno-6-39" name="__codelineno-6-39"></a>        <span class="ss">setFilter</span><span class="p">:</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span id="__span-6-40"><a id="__codelineno-6-40" name="__codelineno-6-40"></a>            <span class="n">state</span><span class="o">.</span><span class="n">filters</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">payload</span>
+</span><span id="__span-6-41"><a id="__codelineno-6-41" name="__codelineno-6-41"></a>        <span class="p">},</span>
+</span><span id="__span-6-42"><a id="__codelineno-6-42" name="__codelineno-6-42"></a>
+</span><span id="__span-6-43"><a id="__codelineno-6-43" name="__codelineno-6-43"></a>    <span class="p">},</span>
+</span><span id="__span-6-44"><a id="__codelineno-6-44" name="__codelineno-6-44"></a><span class="p">})</span>
+</span><span id="__span-6-45"><a id="__codelineno-6-45" name="__codelineno-6-45"></a>
+</span><span id="__span-6-46"><a id="__codelineno-6-46" name="__codelineno-6-46"></a><span class="n">export</span> <span class="n">const</span> <span class="p">{</span>
+</span><span id="__span-6-47"><a id="__codelineno-6-47" name="__codelineno-6-47"></a>    <span class="n">setTitle</span><span class="p">,</span>
+</span><span id="__span-6-48"><a id="__codelineno-6-48" name="__codelineno-6-48"></a>    <span class="n">setToasterState</span><span class="p">,</span>
+</span><span id="__span-6-49"><a id="__codelineno-6-49" name="__codelineno-6-49"></a>    <span class="n">setPageNumber</span><span class="p">,</span>
+</span><span id="__span-6-50"><a id="__codelineno-6-50" name="__codelineno-6-50"></a>    <span class="n">setPageSize</span><span class="p">,</span>
+</span><span id="__span-6-51"><a id="__codelineno-6-51" name="__codelineno-6-51"></a>    <span class="n">setSorting</span><span class="p">,</span>
+</span><span id="__span-6-52"><a id="__codelineno-6-52" name="__codelineno-6-52"></a>    <span class="n">setFilter</span><span class="p">,</span>
+</span><span id="__span-6-53"><a id="__codelineno-6-53" name="__codelineno-6-53"></a>
+</span><span id="__span-6-54"><a id="__codelineno-6-54" name="__codelineno-6-54"></a><span class="p">}</span> <span class="o">=</span> <span class="n">homeSlice</span><span class="o">.</span><span class="n">actions</span>
+</span><span id="__span-6-55"><a id="__codelineno-6-55" name="__codelineno-6-55"></a><span class="n">export</span> <span class="n">default</span> <span class="n">homeSlice</span><span class="o">.</span><span class="n">reducer</span>
 </span></code></pre></div></td></tr></table></div>
 <h4 id="archivo-selectors"><strong>Archivo Selectors </strong></h4>
 <ul>
-<li>Archivos que contenga los Selectors: Donde obtendremos la información initialState</li>
+<li>
+<p>Archivos que contenga los Selectors: Donde obtendremos la información initialState</p>
+</li>
+<li>
+<p>Si no existe el archivo selectors, crea uno y agrega los metodos faltantes</p>
+</li>
+<li>
+<p><img alt="Untitled" src="../Resources/selectors.png" /></p>
+</li>
 </ul>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
@@ -1041,6 +1079,9 @@
 <p>Para generar la tabla, es necesario revisar si contamos con los siguientes archivos y que contenga la siguiente información:</p>
 <h3 id="crear-configuracion-de-tabla"><strong>Crear configuración de tabla</strong></h3>
 <p>Crear el archivo 'configurationTable.jsx'</p>
+<ul>
+<li><img alt="Untitled" src="../Resources/configurationTable.png" /></li>
+</ul>
 <p>Este archivo contiene la confirmación de las columnas que se mostraran en la tabla:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
@@ -1090,52 +1131,22 @@
 </span></code></pre></div></td></tr></table></div>
 <h4 id="implementar-datagrid"><strong>Implementar DataGrid </strong></h4>
 <p>Genera un nuevo archivo con el nombre de la tabla, en este documento importarás la configuración anterior de la tabla, así como el archivo de datagrid ya configurado en el proyecto base.</p>
+<p><img alt="Untitled" src="../Resources/home.png" /></p>
 <ul>
 <li>Es nesario llamar los selectors para obtener el paginado, ordenamiento y filtros:</li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
-<span class="normal"><a href="#__codelineno-9-2">2</a></span>
-<span class="normal"><a href="#__codelineno-9-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a>    <span class="n">const</span> <span class="n">viewPaginationState</span> <span class="o">=</span> <span class="n">useSelector</span><span class="p">((</span><span class="n">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">selectors</span><span class="o">.</span><span class="n">getPagination</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2"></a>    <span class="n">const</span> <span class="n">viewSortingState</span> <span class="o">=</span> <span class="n">useSelector</span><span class="p">((</span><span class="n">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">selectors</span><span class="o">.</span><span class="n">getSorting</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3"></a>    <span class="n">const</span> <span class="n">viewFilter</span> <span class="o">=</span> <span class="n">useSelector</span><span class="p">((</span><span class="n">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">selectors</span><span class="o">.</span><span class="n">getFilters</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="n">import</span> <span class="o">*</span> <span class="n">as</span> <span class="n">selectors</span> <span class="n">from</span> <span class="s1">&#39;../home.selectors&#39;</span>
+</span></code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a>    <span class="n">const</span> <span class="n">viewPaginationState</span> <span class="o">=</span> <span class="n">useSelector</span><span class="p">((</span><span class="n">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">selectors</span><span class="o">.</span><span class="n">getPagination</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2"></a>    <span class="n">const</span> <span class="n">viewSortingState</span> <span class="o">=</span> <span class="n">useSelector</span><span class="p">((</span><span class="n">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">selectors</span><span class="o">.</span><span class="n">getSorting</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3"></a>    <span class="n">const</span> <span class="n">viewFilter</span> <span class="o">=</span> <span class="n">useSelector</span><span class="p">((</span><span class="n">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">selectors</span><span class="o">.</span><span class="n">getFilters</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
 </span></code></pre></div></td></tr></table></div>
 <ul>
 <li>LLamar el endpoint que realizamos para obtener la información del back mandando la información que obtenemos de los selectores del initialState.</li>
 <li>Este endpoint nos regresará un isLoading, isError y una data que contendrá la lista de Items, total, pageSize y pageNumber.</li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-10-10">10</a></span>
-<span class="normal"><a href="#__codelineno-10-11">11</a></span>
-<span class="normal"><a href="#__codelineno-10-12">12</a></span>
-<span class="normal"><a href="#__codelineno-10-13">13</a></span>
-<span class="normal"><a href="#__codelineno-10-14">14</a></span>
-<span class="normal"><a href="#__codelineno-10-15">15</a></span>
-<span class="normal"><a href="#__codelineno-10-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="n">const</span> <span class="p">{</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2"></a>        <span class="ss">data</span><span class="p">:</span> <span class="n">timeSheetsResponse</span><span class="p">,</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3"></a>        <span class="n">isLoading</span><span class="p">,</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4"></a>        <span class="n">isError</span><span class="p">,</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5"></a>        <span class="n">error</span><span class="p">,</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6"></a>    <span class="p">}</span> <span class="o">=</span> <span class="n">useGetTimesheetsQuery</span><span class="p">({</span>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7"></a>        <span class="ss">pagination</span><span class="p">:</span> <span class="p">{</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8"></a>            <span class="ss">pageNumber</span><span class="p">:</span> <span class="n">viewPaginationState</span><span class="o">.</span><span class="n">page</span><span class="p">,</span>
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9"></a>            <span class="ss">pageSize</span><span class="p">:</span> <span class="n">viewPaginationState</span><span class="o">.</span><span class="n">rowsPerPage</span><span class="p">,</span>
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10"></a>        <span class="p">},</span>
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11"></a>        <span class="ss">sorting</span><span class="p">:</span> <span class="p">{</span>
-</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12"></a>            <span class="ss">sortBy</span><span class="p">:</span> <span class="n">viewSortingState</span><span class="o">.</span><span class="n">sortBy</span><span class="p">,</span>
-</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13"></a>            <span class="ss">sortDirection</span><span class="p">:</span> <span class="n">viewSortingState</span><span class="o">.</span><span class="n">sortDirection</span><span class="p">,</span>
-</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14"></a>        <span class="p">},</span>
-</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15"></a>        <span class="ss">filters</span><span class="p">:</span> <span class="n">viewFilter</span> <span class="p">?</span> <span class="n">viewFilter</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16"></a>    <span class="p">})</span>
-</span></code></pre></div></td></tr></table></div>
-<p>Generaremos métodos para llamar las acciones que permitan modificar el paginado y ordenamiento:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
@@ -1147,28 +1158,28 @@
 <span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
 <span class="normal"><a href="#__codelineno-11-10">10</a></span>
 <span class="normal"><a href="#__codelineno-11-11">11</a></span>
-<span class="normal"><a href="#__codelineno-11-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a>    <span class="n">const</span> <span class="n">handleChangePage</span> <span class="o">=</span> <span class="p">(</span><span class="n">pageNumber</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2"></a>        <span class="n">dispatch</span><span class="p">(</span><span class="n">setPageNumber</span><span class="p">(</span><span class="n">pageNumber</span><span class="p">))</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3"></a>    <span class="p">}</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4"></a>    <span class="n">const</span> <span class="n">handleChangeRowsPerPage</span> <span class="o">=</span> <span class="p">(</span><span class="n">pageSize</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5"></a>        <span class="n">dispatch</span><span class="p">(</span><span class="n">setPageSize</span><span class="p">(</span><span class="n">pageSize</span><span class="p">))</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6"></a>    <span class="p">}</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7"></a>    <span class="sr">//</span><span class="o">::::::::::::::::::::::::::::::::::::::::::::::::::::</span><span class="sr">//</span>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8"></a>    <span class="sr">//</span><span class="o">::::::::::::::::</span><span class="p">:(</span><span class="no">Sorting</span><span class="p">)</span><span class="o">::::::::::::::::::::::::::</span><span class="sr">//</span>
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9"></a>    <span class="n">const</span> <span class="n">onchangeSorting</span> <span class="o">=</span> <span class="p">(</span><span class="n">sort</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10"></a>        <span class="n">dispatch</span><span class="p">(</span><span class="n">setSorting</span><span class="p">({</span> <span class="ss">sortBy</span><span class="p">:</span> <span class="n">sort</span><span class="p">,</span> <span class="ss">sortDirection</span><span class="p">:</span> <span class="n">direction</span> <span class="p">}))</span>
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11"></a>    <span class="p">}</span>
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12"></a>    <span class="sr">//</span><span class="o">::::::::::::::::::::::::::::::::::::::::::::::::::::</span><span class="sr">//</span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span>
+<span class="normal"><a href="#__codelineno-11-13">13</a></span>
+<span class="normal"><a href="#__codelineno-11-14">14</a></span>
+<span class="normal"><a href="#__codelineno-11-15">15</a></span>
+<span class="normal"><a href="#__codelineno-11-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="n">const</span> <span class="p">{</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2"></a>        <span class="ss">data</span><span class="p">:</span> <span class="n">timeSheetsResponse</span><span class="p">,</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3"></a>        <span class="n">isLoading</span><span class="p">,</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4"></a>        <span class="n">isError</span><span class="p">,</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5"></a>        <span class="n">error</span><span class="p">,</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6"></a>    <span class="p">}</span> <span class="o">=</span> <span class="n">useGetTimesheetsQuery</span><span class="p">({</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7"></a>        <span class="ss">pagination</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8"></a>            <span class="ss">pageNumber</span><span class="p">:</span> <span class="n">viewPaginationState</span><span class="o">.</span><span class="n">page</span><span class="p">,</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9"></a>            <span class="ss">pageSize</span><span class="p">:</span> <span class="n">viewPaginationState</span><span class="o">.</span><span class="n">rowsPerPage</span><span class="p">,</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10"></a>        <span class="p">},</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11"></a>        <span class="ss">sorting</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12"></a>            <span class="ss">sortBy</span><span class="p">:</span> <span class="n">viewSortingState</span><span class="o">.</span><span class="n">sortBy</span><span class="p">,</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13"></a>            <span class="ss">sortDirection</span><span class="p">:</span> <span class="n">viewSortingState</span><span class="o">.</span><span class="n">sortDirection</span><span class="p">,</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14"></a>        <span class="p">},</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15"></a>        <span class="ss">filters</span><span class="p">:</span> <span class="n">viewFilter</span> <span class="p">?</span> <span class="n">viewFilter</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16"></a>    <span class="p">})</span>
 </span></code></pre></div></td></tr></table></div>
-<p>Si quieres realizar alguna modificación de las columnas puedes realizar la siguiente configuración:</p>
-<ul>
-<li>
-<p>Se pasa la configuración de la tabla, tableConfig.</p>
-</li>
-<li>
-<p>Se indica la tabla que quieres modificar y el cambio que quieras realizar</p>
-</li>
-</ul>
+<p>Generaremos métodos para llamar las acciones que permitan modificar el paginado y ordenamiento:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-12-3"> 3</a></span>
@@ -1180,54 +1191,28 @@
 <span class="normal"><a href="#__codelineno-12-9"> 9</a></span>
 <span class="normal"><a href="#__codelineno-12-10">10</a></span>
 <span class="normal"><a href="#__codelineno-12-11">11</a></span>
-<span class="normal"><a href="#__codelineno-12-12">12</a></span>
-<span class="normal"><a href="#__codelineno-12-13">13</a></span>
-<span class="normal"><a href="#__codelineno-12-14">14</a></span>
-<span class="normal"><a href="#__codelineno-12-15">15</a></span>
-<span class="normal"><a href="#__codelineno-12-16">16</a></span>
-<span class="normal"><a href="#__codelineno-12-17">17</a></span>
-<span class="normal"><a href="#__codelineno-12-18">18</a></span>
-<span class="normal"><a href="#__codelineno-12-19">19</a></span>
-<span class="normal"><a href="#__codelineno-12-20">20</a></span>
-<span class="normal"><a href="#__codelineno-12-21">21</a></span>
-<span class="normal"><a href="#__codelineno-12-22">22</a></span>
-<span class="normal"><a href="#__codelineno-12-23">23</a></span>
-<span class="normal"><a href="#__codelineno-12-24">24</a></span>
-<span class="normal"><a href="#__codelineno-12-25">25</a></span>
-<span class="normal"><a href="#__codelineno-12-26">26</a></span>
-<span class="normal"><a href="#__codelineno-12-27">27</a></span>
-<span class="normal"><a href="#__codelineno-12-28">28</a></span>
-<span class="normal"><a href="#__codelineno-12-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="n">const</span> <span class="o">[</span><span class="n">localTableConfig</span><span class="p">,</span> <span class="n">setLocalTableConfig</span><span class="o">]</span> <span class="o">=</span> <span class="n">useState</span><span class="p">(</span><span class="o">[]</span><span class="p">)</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2"></a>    <span class="n">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3"></a>        <span class="k">if</span> <span class="p">(</span><span class="n">tableConfig</span><span class="p">)</span> <span class="p">{</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4"></a>            <span class="n">var</span> <span class="n">local</span> <span class="o">=</span> <span class="n">tableConfig</span><span class="o">.</span><span class="n">map</span><span class="p">((</span><span class="n">config</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5"></a>                <span class="k">return</span> <span class="p">{</span> <span class="o">...</span><span class="n">config</span> <span class="p">}</span>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6"></a>            <span class="p">})</span>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7"></a>            <span class="n">setLocalTableConfig</span><span class="p">(</span><span class="n">local</span><span class="p">)</span>
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8"></a>        <span class="p">}</span>
-</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9"></a>    <span class="p">},</span> <span class="o">[</span><span class="n">tableConfig</span><span class="o">]</span><span class="p">)</span>
-</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10"></a>    <span class="sr">/**</span>
-</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11"></a><span class="sr">     * Get the header configuration</span>
-</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12"></a><span class="sr">     */</span>
-</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13"></a>    <span class="n">const</span> <span class="n">enhancedConfiguration</span> <span class="o">=</span> <span class="n">localTableConfig</span><span class="o">.</span><span class="n">map</span><span class="p">((</span><span class="n">config</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14"></a>        <span class="n">switch</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dataSource</span><span class="p">)</span> <span class="p">{</span>
-</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15"></a>            <span class="k">case</span> <span class="s1">&#39;startDate&#39;</span><span class="p">:</span>
-</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16"></a>                <span class="n">config</span><span class="o">.</span><span class="n">onRenderProperty</span> <span class="o">=</span> <span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17"></a>                    <span class="k">return</span> <span class="n">moment</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startDate</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;DD/MM/YYYY&#39;</span><span class="p">)</span>
-</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18"></a>                <span class="p">}</span>
-</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19"></a>                <span class="k">break</span>
-</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20"></a>            <span class="k">case</span> <span class="s1">&#39;endDate&#39;</span><span class="p">:</span>
-</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21"></a>                <span class="n">config</span><span class="o">.</span><span class="n">onRenderProperty</span> <span class="o">=</span> <span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22"></a>                    <span class="k">return</span> <span class="n">moment</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">endDate</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;DD/MM/YYYY&#39;</span><span class="p">)</span>
-</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23"></a>                <span class="p">}</span>
-</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24"></a>                <span class="k">break</span>
-</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25"></a>            <span class="ss">default</span><span class="p">:</span>
-</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26"></a>        <span class="p">}</span>
-</span><span id="__span-12-27"><a id="__codelineno-12-27" name="__codelineno-12-27"></a>        <span class="k">return</span> <span class="n">config</span>
-</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28"></a>    <span class="p">})</span>
-</span><span id="__span-12-29"><a id="__codelineno-12-29" name="__codelineno-12-29"></a>    <span class="sb">```</span>
+<span class="normal"><a href="#__codelineno-12-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1"></a>    <span class="n">const</span> <span class="n">handleChangePage</span> <span class="o">=</span> <span class="p">(</span><span class="n">pageNumber</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2"></a>        <span class="n">dispatch</span><span class="p">(</span><span class="n">setPageNumber</span><span class="p">(</span><span class="n">pageNumber</span><span class="p">))</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3"></a>    <span class="p">}</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4"></a>    <span class="n">const</span> <span class="n">handleChangeRowsPerPage</span> <span class="o">=</span> <span class="p">(</span><span class="n">pageSize</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5"></a>        <span class="n">dispatch</span><span class="p">(</span><span class="n">setPageSize</span><span class="p">(</span><span class="n">pageSize</span><span class="p">))</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6"></a>    <span class="p">}</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7"></a>    <span class="sr">//</span><span class="o">::::::::::::::::::::::::::::::::::::::::::::::::::::</span><span class="sr">//</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8"></a>    <span class="sr">//</span><span class="o">::::::::::::::::</span><span class="p">:(</span><span class="no">Sorting</span><span class="p">)</span><span class="o">::::::::::::::::::::::::::</span><span class="sr">//</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9"></a>    <span class="n">const</span> <span class="n">onchangeSorting</span> <span class="o">=</span> <span class="p">(</span><span class="n">sort</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10"></a>        <span class="n">dispatch</span><span class="p">(</span><span class="n">setSorting</span><span class="p">({</span> <span class="ss">sortBy</span><span class="p">:</span> <span class="n">sort</span><span class="p">,</span> <span class="ss">sortDirection</span><span class="p">:</span> <span class="n">direction</span> <span class="p">}))</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11"></a>    <span class="p">}</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12"></a>    <span class="sr">//</span><span class="o">::::::::::::::::::::::::::::::::::::::::::::::::::::</span><span class="sr">//</span>
 </span></code></pre></div></td></tr></table></div>
-<p>Ahora llamamos la tabla y le pasamos los valores correspondientes:</p>
+<p>Si quieres realizar alguna modificación de las columnas puedes realizar la siguiente configuración:</p>
+<ul>
+<li>
+<p>Se pasa la configuración de la tabla, tableConfig.</p>
+</li>
+<li>
+<p>Se indica la tabla que quieres modificar y el cambio que quieras realizar</p>
+</li>
+</ul>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-13-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-13-3"> 3</a></span>
@@ -1242,21 +1227,80 @@
 <span class="normal"><a href="#__codelineno-13-12">12</a></span>
 <span class="normal"><a href="#__codelineno-13-13">13</a></span>
 <span class="normal"><a href="#__codelineno-13-14">14</a></span>
-<span class="normal"><a href="#__codelineno-13-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1"></a>    <span class="o">&lt;</span><span class="no">Box</span><span class="o">&gt;</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2"></a>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3"></a>            <span class="o">&lt;</span><span class="no">DataGrid</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4"></a>                <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="n">enhancedConfiguration</span><span class="p">}</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5"></a>                <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">}</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6"></a>                <span class="n">onchangeSorting</span><span class="o">=</span><span class="p">{</span><span class="n">onchangeSorting</span><span class="p">}</span>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7"></a>                <span class="n">sortBy</span><span class="o">=</span><span class="p">{</span><span class="n">sortBy</span><span class="p">}</span>
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8"></a>                <span class="n">sortDirection</span><span class="o">=</span><span class="p">{</span><span class="n">sortDirection</span><span class="p">}</span>
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9"></a>            <span class="sr">/&gt;</span>
-</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10"></a><span class="sr">            &lt;Pagination</span>
-</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11"></a><span class="sr">                pagination={data}</span>
-</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12"></a><span class="sr">                onPageChange={handleChangePage}</span>
-</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13"></a><span class="sr">                onRowsPerPageChange={handleChangeRowsPerPage}</span>
-</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14"></a><span class="sr">            /</span><span class="o">&gt;</span>
-</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15"></a>        <span class="o">&lt;</span><span class="sr">/Box&gt;</span>
+<span class="normal"><a href="#__codelineno-13-15">15</a></span>
+<span class="normal"><a href="#__codelineno-13-16">16</a></span>
+<span class="normal"><a href="#__codelineno-13-17">17</a></span>
+<span class="normal"><a href="#__codelineno-13-18">18</a></span>
+<span class="normal"><a href="#__codelineno-13-19">19</a></span>
+<span class="normal"><a href="#__codelineno-13-20">20</a></span>
+<span class="normal"><a href="#__codelineno-13-21">21</a></span>
+<span class="normal"><a href="#__codelineno-13-22">22</a></span>
+<span class="normal"><a href="#__codelineno-13-23">23</a></span>
+<span class="normal"><a href="#__codelineno-13-24">24</a></span>
+<span class="normal"><a href="#__codelineno-13-25">25</a></span>
+<span class="normal"><a href="#__codelineno-13-26">26</a></span>
+<span class="normal"><a href="#__codelineno-13-27">27</a></span>
+<span class="normal"><a href="#__codelineno-13-28">28</a></span>
+<span class="normal"><a href="#__codelineno-13-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="n">const</span> <span class="o">[</span><span class="n">localTableConfig</span><span class="p">,</span> <span class="n">setLocalTableConfig</span><span class="o">]</span> <span class="o">=</span> <span class="n">useState</span><span class="p">(</span><span class="o">[]</span><span class="p">)</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2"></a>    <span class="n">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3"></a>        <span class="k">if</span> <span class="p">(</span><span class="n">tableConfig</span><span class="p">)</span> <span class="p">{</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4"></a>            <span class="n">var</span> <span class="n">local</span> <span class="o">=</span> <span class="n">tableConfig</span><span class="o">.</span><span class="n">map</span><span class="p">((</span><span class="n">config</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5"></a>                <span class="k">return</span> <span class="p">{</span> <span class="o">...</span><span class="n">config</span> <span class="p">}</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6"></a>            <span class="p">})</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7"></a>            <span class="n">setLocalTableConfig</span><span class="p">(</span><span class="n">local</span><span class="p">)</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8"></a>        <span class="p">}</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9"></a>    <span class="p">},</span> <span class="o">[</span><span class="n">tableConfig</span><span class="o">]</span><span class="p">)</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10"></a>    <span class="sr">/**</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11"></a><span class="sr">     * Get the header configuration</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12"></a><span class="sr">     */</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13"></a>    <span class="n">const</span> <span class="n">enhancedConfiguration</span> <span class="o">=</span> <span class="n">localTableConfig</span><span class="o">.</span><span class="n">map</span><span class="p">((</span><span class="n">config</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14"></a>        <span class="n">switch</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dataSource</span><span class="p">)</span> <span class="p">{</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15"></a>            <span class="k">case</span> <span class="s1">&#39;startDate&#39;</span><span class="p">:</span>
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16"></a>                <span class="n">config</span><span class="o">.</span><span class="n">onRenderProperty</span> <span class="o">=</span> <span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17"></a>                    <span class="k">return</span> <span class="n">moment</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startDate</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;DD/MM/YYYY&#39;</span><span class="p">)</span>
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18"></a>                <span class="p">}</span>
+</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19"></a>                <span class="k">break</span>
+</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20"></a>            <span class="k">case</span> <span class="s1">&#39;endDate&#39;</span><span class="p">:</span>
+</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21"></a>                <span class="n">config</span><span class="o">.</span><span class="n">onRenderProperty</span> <span class="o">=</span> <span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22"></a>                    <span class="k">return</span> <span class="n">moment</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">endDate</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;DD/MM/YYYY&#39;</span><span class="p">)</span>
+</span><span id="__span-13-23"><a id="__codelineno-13-23" name="__codelineno-13-23"></a>                <span class="p">}</span>
+</span><span id="__span-13-24"><a id="__codelineno-13-24" name="__codelineno-13-24"></a>                <span class="k">break</span>
+</span><span id="__span-13-25"><a id="__codelineno-13-25" name="__codelineno-13-25"></a>            <span class="ss">default</span><span class="p">:</span>
+</span><span id="__span-13-26"><a id="__codelineno-13-26" name="__codelineno-13-26"></a>        <span class="p">}</span>
+</span><span id="__span-13-27"><a id="__codelineno-13-27" name="__codelineno-13-27"></a>        <span class="k">return</span> <span class="n">config</span>
+</span><span id="__span-13-28"><a id="__codelineno-13-28" name="__codelineno-13-28"></a>    <span class="p">})</span>
+</span><span id="__span-13-29"><a id="__codelineno-13-29" name="__codelineno-13-29"></a>    <span class="sb">```</span>
+</span></code></pre></div></td></tr></table></div>
+<p>Ahora llamamos la tabla y le pasamos los valores correspondientes:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-14-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-14-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-14-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-14-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-14-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-14-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-14-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-14-10">10</a></span>
+<span class="normal"><a href="#__codelineno-14-11">11</a></span>
+<span class="normal"><a href="#__codelineno-14-12">12</a></span>
+<span class="normal"><a href="#__codelineno-14-13">13</a></span>
+<span class="normal"><a href="#__codelineno-14-14">14</a></span>
+<span class="normal"><a href="#__codelineno-14-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1"></a>    <span class="o">&lt;</span><span class="no">Box</span><span class="o">&gt;</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3"></a>            <span class="o">&lt;</span><span class="no">DataGrid</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4"></a>                <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="n">enhancedConfiguration</span><span class="p">}</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5"></a>                <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">}</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6"></a>                <span class="n">onchangeSorting</span><span class="o">=</span><span class="p">{</span><span class="n">onchangeSorting</span><span class="p">}</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7"></a>                <span class="n">sortBy</span><span class="o">=</span><span class="p">{</span><span class="n">sortBy</span><span class="p">}</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8"></a>                <span class="n">sortDirection</span><span class="o">=</span><span class="p">{</span><span class="n">sortDirection</span><span class="p">}</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9"></a>            <span class="sr">/&gt;</span>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10"></a><span class="sr">            &lt;Pagination</span>
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11"></a><span class="sr">                pagination={data}</span>
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12"></a><span class="sr">                onPageChange={handleChangePage}</span>
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13"></a><span class="sr">                onRowsPerPageChange={handleChangeRowsPerPage}</span>
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14"></a><span class="sr">            /</span><span class="o">&gt;</span>
+</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15"></a>        <span class="o">&lt;</span><span class="sr">/Box&gt;</span>
 </span></code></pre></div></td></tr></table></div>
 <p><img alt="Untitled" src="../Resources/index.png" /></p>
 <p><img alt="Untitled" src="../Resources/filters.png" /></p>
