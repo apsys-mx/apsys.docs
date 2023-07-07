@@ -739,7 +739,7 @@ proyecto llamado apsys.pokedex</p>
 <span class="normal"><a href="#__codelineno-1-5">5</a></span>
 <span class="normal"><a href="#__codelineno-1-6">6</a></span>
 <span class="normal"><a href="#__codelineno-1-7">7</a></span>
-<span class="normal"><a href="#__codelineno-1-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="n">namespace</span> <span class="n">apsys</span><span class="o">.</span><span class="n">pokedex</span><span class="o">.</span><span class="n">products</span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="n">namespace</span> <span class="n">apsys</span><span class="o">.</span><span class="n">pokedex</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="p">{</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>    <span class="kp">public</span> <span class="k">class</span> <span class="nc">Pokemon</span> <span class="p">:</span> <span class="no">AbstractDomainObject</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a>    <span class="p">{</span>
@@ -748,8 +748,6 @@ proyecto llamado apsys.pokedex</p>
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a>    <span class="p">}</span>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
-<p>Debido a que el <em>id</em> del pokemon es un entero en la base de datos vamos a modificar la clase AbstractDomainObject para quede de la siguiente manera:</p>
-<p><img alt="Untitled" src="../Resources/14BRefactor-base-class.png" /></p>
 <p>Por el momento solo agregaremos este bloque de codigo en la clase, continuamos en el siguiente paso.</p>
 <p>Lo siguiente sera trabajar en nuestra capa de datos. Primero crearemos la interfaz del repositorio que se relaciona con la tabla de pokemons en la base de datos, en el proyecto de
 repositorios agregamos una nueva interfaz llamada <em>IPokemonRepository</em>.</p>
