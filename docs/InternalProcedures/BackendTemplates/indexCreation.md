@@ -8,7 +8,7 @@ Y como primer ejercicio tendras la tarea de generar un indice básico utilizando
 Deberas abrir el software Visual Studio, usea la plantilla de Apsys que instalamos previamente y con ella crearemos un nuevo
 proyecto llamado apsys.pokedex
 
-
+![Untitled](Resources/01Create-project%20(1).png)
 
 Hay que descargar el respaldo de la base de datos por medio del siguiente link: [Pokedex DB](pokedex.bak "download")
 
@@ -51,17 +51,13 @@ Nos situamos en el explorador de la solución donde se denotan cuatro capas **do
 
 La primera capa que trabajaremos sera la que corresponde al dominio. 
 
-
-
-
-
 Como siguiente paso agregaremos las clases que usaremos para lalógica de nuestra aplicación. La primera de ellas sera la clase que va a representar un producto de la aplicación y dicha clase la nombraremos *Pokemon*.
 
+![Untitled](Resources/13Create-class.png)
 
+![Untitled](Resources/14Create-class.png)
 
-
-
-El codigo que colocaremos dentro de la clase creada sera el siguiente:
+El codigo que colocaremos dentro de la clase *Pokemon* sera el siguiente:
 
 ```ruby linenums="1"
 namespace apsys.pokedex.products
@@ -75,13 +71,58 @@ namespace apsys.pokedex.products
 
 ```
 
-Debido a que el *id* del pokemon es un entero en la base de datos vamos a modificar la clase AbstractDomainObject para quede de la siguiente manera:
+Por el momento solo agregaremos este bloque de codigo en la clase, continuamos en el siguiente paso.
 
-![Untitled](Resources/14BRefactor-base-class.png)
+Lo siguiente sera trabajar en nuestra capa de datos. Primero crearemos la interfaz del repositorio que se relaciona con la tabla de pokemons en la base de datos, en el proyecto de
+repositorios agregamos una nueva interfaz llamada *IPokemonRepository*.
 
-Por el momento solo agregaremos este bloque de codigo en la clase, ya que para este punto nuestro objetivo es configurar la conexión con nuestra base de datos.
+![Untitled](Resources/21Pokemons-interface.png)
 
-Como siguiente paso debemos trabajar en la capa de datos y para ello primeramente haremos algunos cambios en la conexión a la base de datos. Se abre el archivo *runmigrations.bat* y *rollback.bat*
+![Untitled](Resources/22Pokemons-interface.png)
+
+Se debe de insertar el siguinete codigo en la interfaz *IPokemonInterfaz*
+
+```ruby linenums="1"
+using apsys.pokedex;
+
+namespace apsys.pokedex.repositories
+{
+    public interface IPokemonsRepository : IRepository<Pokemon>
+    {
+    }
+}
+
+```
+
+Siendo que la interfaz mencionada solo define el contrato del repositorio ahora debemos crear una clase que implemente este repositorio, dicha clase la vamos a agregar en
+el proyecto de repositorios para *NHibernate* (el proceso a seguir para agregar una clase es el mismo que anteriormente presentamos en este tutorial con la clase *Pokemon*), 
+agregamos la clase *PokemonRepository*
+
+![Untitled](Resources/23Pokemons-repository.png)
+
+El codigo a insertar en la clase *PokemonRepository* es el siguiente:
+
+```ruby linenums="1"
+using apsys.pokedex;
+using NHibernate;
+
+namespace apsys.pokedex.repositories.nhibernate
+{
+    public class PokemonsRepository : Repository<Pokemon>, IPokemonsRepository
+    {
+        public PokemonsRepository(ISession session) 
+            : base(session)
+        {
+        }
+    }
+}
+
+```
+
+A continuación agregamos el repositorio de pokemons en la unidad de trabajo, para ello abrimos la interfaz *IUnitOfWork* que se encuentra en el proyecto de repositorios.
+
+
+<!-- Como siguiente paso debemos trabajar en la capa de datos y para ello primeramente haremos algunos cambios en la conexión a la base de datos. Se abre el archivo *runmigrations.bat* y *rollback.bat*
 
 ![Untitled](Resources/15Migration-files%20(1).png)
 
@@ -103,7 +144,7 @@ Buscaremos el archivo *runmigrations.bat* en el explorador de archivos y lo ejec
 !!!nota
     Por el momento no usaremos estas tablas, sin embargo son necesarias para poder terminar el tutorial. 
 
-El resultado de la ejecución será alfo similar a lo que se muestra en la siguiente imagen:
+<!-- El resultado de la ejecución será alfo similar a lo que se muestra en la siguiente imagen:
 
 
 
@@ -154,12 +195,10 @@ namespace adventure.works.repositories.nhibernate
 
 Posteriormente agregamos el repositorio de produtos en la unidad de trabajo, para poder realizar esto abrimos la interfaz *IUnitOfWork* que se encuentra en el proyecto de repositorios.
 <!-- Img24 -->
-En esta interfaz agregaremos la linea de código siguiente, la cual define el repositorio de productos.
+<!-- En esta interfaz agregaremos la linea de código siguiente, la cual define el repositorio de productos.
 <!-- # Img25 -->
-Por otra parte también deberemos modificar la clase que implementa la interfaz de la unidad de trabajo, tal que ahora vamos a abrir la clase *UnitOfWork*
+<!-- Por otra parte también deberemos modificar la clase que implementa la interfaz de la unidad de trabajo, tal que ahora vamos a abrir la clase *UnitOfWork* -->
 <!-- # Img26 -->
-En esta clase agregaremos dos lineas de código tal como se puede observar en la siguiente imagen:
+<!-- En esta clase agregaremos dos lineas de código tal como se puede observar en la siguiente imagen: -->
 <!-- # Img27 -->
-Hay que configura el mapeo para relacionar la clase *Product* del dominio con la tabla ```[SalesLT].[Product]``` de la base de datos, agregamos una nueva clase llamada *ProductMapper* en la carpeta *mappers* del proyecto de repositorios de *NHibernate*.
-<!-- # Img28 -->
-
+<!-- Hay que configura el mapeo para relacionar la clase *Product* del dominio con la tabla ```[SalesLT].[Product]``` de la base de datos, agregamos una nueva clase llamada *ProductMapper* en la carpeta *mappers* del proyecto de repositorios de *NHibernate*. -->
