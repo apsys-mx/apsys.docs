@@ -501,7 +501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../InternalProcedures/Templates/" class="md-nav__link">
+      <a href="../InternalProcedures/BackendTemplates/" class="md-nav__link">
         Instalacion y uso de Plantillas
       </a>
     </li>
@@ -515,7 +515,68 @@
   
   
     <li class="md-nav__item">
-      <a href="../InternalProcedures/Templates/indexCreation/" class="md-nav__link">
+      <a href="../InternalProcedures/BackendTemplates/indexCreation/" class="md-nav__link">
+        Crear un indice desde una plantilla
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          Plantillas Frontend
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Plantillas Frontend" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Plantillas Frontend
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InternalProcedures/FrontendTemplates/" class="md-nav__link">
+        Instalación y uso de Plantillas
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InternalProcedures/FrontendTemplates/indexCreation/" class="md-nav__link">
         Crear un indice desde una plantilla
       </a>
     </li>
@@ -915,29 +976,29 @@
 <ul>
 <li>Verificamos la disponibilidad de versiones en la <a href="https://nodejs.org/en/">documentación</a> de node.js y escribimos en la consola.</li>
 </ul>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="no">[server]</span><span class="p">$</span> <span class="n">nvm</span> <span class="n">install</span> <span class="n">v</span><span class="s1">&#39;aqui va la version&#39;</span>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="no">[server]</span><span class="p">$</span> <span class="n">nvm</span> <span class="n">install</span> <span class="n">v</span><span class="s1">&#39;aqui va la version&#39;</span>
 </span></code></pre></div>
 <ul>
 <li>Posterior a la instalación establecemos la versión de node.js que se utilizara.</li>
 </ul>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="no">[server]</span><span class="p">$</span> <span class="n">nvm</span> <span class="n">use</span> <span class="n">v</span><span class="s1">&#39;versión del node.js&#39;</span>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="no">[server]</span><span class="p">$</span> <span class="n">nvm</span> <span class="n">use</span> <span class="n">v</span><span class="s1">&#39;versión del node.js&#39;</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">Now</span> <span class="n">using</span> <span class="n">node</span> <span class="n">v</span><span class="s1">&#39;versión del node.js&#39;</span> <span class="p">(</span><span class="n">npm</span> <span class="n">v</span><span class="p">)</span>
 </span></code></pre></div>
 <ul>
 <li>Comprobamos la versión de node.js que se esta ejecutando ingresando la siguiente linea:</li>
 </ul>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="no">[server]</span><span class="p">$</span> <span class="n">node</span> <span class="n">-v</span>
+<div class="highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="no">[server]</span><span class="p">$</span> <span class="n">node</span> <span class="n">-v</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">v</span><span class="s1">&#39;versión del node.js&#39;</span>
 </span></code></pre></div>
 <ul>
 <li>Por último deberemos verificar y/o instalar el Node Package Manager(npm), para esto escribiremos en la consola lo siguiente:</li>
 </ul>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="no">[server]</span><span class="p">$</span> <span class="n">npm</span> <span class="n">install</span> <span class="n">-g</span> <span class="n">npm</span>
+<div class="highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="no">[server]</span><span class="p">$</span> <span class="n">npm</span> <span class="n">install</span> <span class="n">-g</span> <span class="n">npm</span>
 </span></code></pre></div>
 <ul>
 <li>Y de manera similar como con el node.js, revisamos la versión del npm con el siguiente comando:</li>
 </ul>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="no">[server]</span><span class="p">$</span> <span class="n">npm</span> <span class="n">-v</span>
+<div class="highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="no">[server]</span><span class="p">$</span> <span class="n">npm</span> <span class="n">-v</span>
 </span></code></pre></div>
 <aside>
 ☝ Es muy recomendable que cada que te integres o inicies algún proyecto verifiques que versión de node y npm se requiere, pregúntale a tu coach o compañeros de proyecto si tienes dudas.
