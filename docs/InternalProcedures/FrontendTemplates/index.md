@@ -69,3 +69,90 @@ Cambiamos o creamos el branch a devel
 
 ![Untitled](Resources/changeBranch.png)
 ![Untitled](Resources/branch.png)
+
+Revisamos la versión de node que tengamos instalas, abrimos una consola como administrador.
+`nvm list`
+
+![Untitled](Resources/node.png)
+
+Utilizamos la 18.13.0, si no la tenemos la instalamos.
+
+`nvm use 18.16.0` o instalamos `nvm install 18.13.0`
+![Untitled](Resources/nvmUse.png)
+
+Abrimos el protecto y abrimos la consola y comenzamos cons instalar los paquetes:
+
+Ahora ejecutamos el proyecto con `npm install`
+
+![Untitled](Resources/npmInstall.png)
+
+Inicializamos el proyecto:
+
+![Untitled](Resources/runDev.png)
+
+Nos debe de aparecer la vista de inicio ingresamos ala plataforma:
+
+![Untitled](Resources/inicio.png)
+
+Si nos aparece este error debemos de inicializar el usuario:
+
+![Untitled](Resources/error.png)
+
+Ingresamos el postman:
+![Untitled](Resources/postman2.png)
+
+-agregamos la siguiente ruta:
+`http://localhost:57065/clients`
+
+-Indicamos que sea un método post
+
+-Agregamos lo siguiente en el body:
+
+```ruby linenums="1"
+
+{
+   "ClientId":"apsys.frontend.base",
+   "ClientName":"SIT Alpunto Web Application",
+   "AllowedGrantTypes":[
+      "implicit"
+   ],
+   "AllowAccessTokensViaBrowser":true,
+   "AlwaysIncludeUserClaimsInIdToken":true,
+   "AllowedCorsOrigins":[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173"
+   ],
+   "RedirectUris":[
+        "http://localhost:5173/callback",
+        "http://127.0.0.1:5173/callback"
+   ],
+   "PostLogoutRedirectUris":[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173"
+   ],
+   "AllowedScopes":[
+        "openid",
+        "profile",
+        "userprofile"
+   ],
+   "RequireConsent":false,
+   "ClientSecrets":[
+      {
+         "value":"8bzLMAwmmlPbMWSeXmMp8qOo3yKhPCN85Ws28Qswhe8="
+      }
+   ]
+}
+
+```
+
+-Ingresar clientId el id de tu proyecto del front:
+![Untitled](Resources/id.png)
+
+-En AllowedCorsOrigins, PostLogoutRedirectUris agregamos la ruta del front, y para RedirectUris asignamos a la ruta agregando `/callback`
+![Untitled](Resources/idClient.png)
+
+-Confirmamos que estén todos los campos como se ve en la imagen y para finalizar enviamos la petición y nos debe dar una repuesta ok:
+
+![Untitled](Resources/postman2.png)
+
+-
