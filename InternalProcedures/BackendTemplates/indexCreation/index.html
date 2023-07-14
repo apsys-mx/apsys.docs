@@ -728,7 +728,7 @@ proyecto llamado apsys.pokedex</p>
 <p>Notese que en cada capa hay un proyecto con la terminación <em>testing</em>, estos son proyectos para realizar pruebas automatizadas y que son de gran importancia, pero para este tutorial no los usaremos ya que nos centraremos en poner en marcha nuestro primer proyecto.</p>
 </div>
 <p>La primera capa que trabajaremos sera la que corresponde al dominio. </p>
-<p>Como siguiente paso agregaremos las clases que usaremos para lalógica de nuestra aplicación. La primera de ellas sera la clase que va a representar un producto de la aplicación y dicha clase la nombraremos <em>Pokemon</em>.</p>
+<p>Como siguiente paso agregaremos las clases que usaremos para la lógica de nuestra aplicación. La primera de ellas sera la clase que va a representar un producto de la aplicación y dicha clase la nombraremos <em>Pokemon</em>.</p>
 <p><img alt="Untitled" src="../Resources/13Create-class.png" /></p>
 <p><img alt="Untitled" src="../Resources/14Create-class.png" /></p>
 <p>El codigo que colocaremos dentro de la clase <em>Pokemon</em> sera el siguiente:</p>
@@ -743,10 +743,10 @@ proyecto llamado apsys.pokedex</p>
 </span></code></pre></div>
 <p>Por el momento solo agregaremos este bloque de codigo en la clase, continuamos en el siguiente paso.</p>
 <p>Lo siguiente sera trabajar en nuestra capa de datos. Primero crearemos la interfaz del repositorio que se relaciona con la tabla de pokemons en la base de datos, en el proyecto de
-repositorios agregamos una nueva interfaz llamada <em>IPokemonRepository</em>.</p>
+repositorios agregamos una nueva interfaz llamada <em>IPokemonsRepository</em>.</p>
 <p><img alt="Untitled" src="../Resources/21Pokemons-interface.png" /></p>
 <p><img alt="Untitled" src="../Resources/22Pokemons-interface.png" /></p>
-<p>Se debe de insertar el siguinete codigo en la interfaz <em>IPokemonInterfaz</em></p>
+<p>Se debe de insertar el siguinete codigo en la interfaz <em>IPokemonsRepository</em></p>
 <div class="highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">using</span> <span class="n">apsys</span><span class="o">.</span><span class="n">pokedex</span><span class="p">;</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">namespace</span> <span class="n">apsys</span><span class="o">.</span><span class="n">pokedex</span><span class="o">.</span><span class="n">repositories</span>
@@ -758,9 +758,9 @@ repositorios agregamos una nueva interfaz llamada <em>IPokemonRepository</em>.</
 </span></code></pre></div>
 <p>Siendo que la interfaz mencionada solo define el contrato del repositorio ahora debemos crear una clase que implemente este repositorio, dicha clase la vamos a agregar en
 el proyecto de repositorios para <em>NHibernate</em> (el proceso a seguir para agregar una clase es el mismo que anteriormente presentamos en este tutorial con la clase <em>Pokemon</em>), 
-agregamos la clase <em>PokemonRepository</em></p>
+agregamos la clase <em>PokemonsRepository</em></p>
 <p><img alt="Untitled" src="../Resources/23Pokemons-repository.png" /></p>
-<p>El codigo a insertar en la clase <em>PokemonRepository</em> es el siguiente:</p>
+<p>El codigo a insertar en la clase <em>PokemonsRepository</em> es el siguiente:</p>
 <div class="highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">using</span> <span class="n">apsys</span><span class="o">.</span><span class="n">pokedex</span><span class="p">;</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">using</span> <span class="no">NHibernate</span><span class="p">;</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
