@@ -217,10 +217,11 @@ Crear el archivo 'configurationTable.jsx'
 
 - ![Untitled](Resources/configurationTable.png)
 
-Este archivo contiene la confirmación de las columnas que se mostraran en la tabla:
+Este archivo contiene la confirmación de la tabla, aquí indicamos las columnas que queremos que aparecen en la tabla:
+|
 
 ```ruby linenums="1"
-export const defaultTableConfigurationTimeSheets = [
+export const localTableConfig = [
     {
        title: 'Codigo del proyecto', //=>Nombre de la columna
 		sortable: true, //=>Si aplicará ordenmiento en la columna
@@ -248,11 +249,15 @@ export const defaultTableConfigurationTimeSheets = [
 
 #### **Implementar DataGrid **
 
-Genera un nuevo archivo con el nombre de la tabla, en este documento importarás la configuración anterior de la tabla, así como el archivo de datagrid ya configurado en el proyecto base.
+Genera un nuevo archivo o buscamos el archivo donde queremos implementar la tabla:
 
 ![Untitled](Resources/home.png)
 
-- Es nesario llamar los selectors para obtener el paginado, ordenamiento y filtros:
+En este documento importarás la configuración anterior de la tabla, así como el archivo de datagrid y el paginado ya configurado en el proyecto base.
+
+![Untitled](Resources/import.png)
+
+- Es necesario llamar los selectors para obtener el paginado, ordenamiento y filtros:
 
 ```ruby linenums="1"
 import * as selectors from '../home.selectors'
@@ -264,7 +269,7 @@ import * as selectors from '../home.selectors'
 	const viewFilter = useSelector((state) => selectors.getFilters(state))
 ```
 
-- LLamar el endpoint que realizamos para obtener la información del back mandando la información que obtenemos de los selectores del initialState.
+- Llamar el endpoint que realizamos para obtener la información del back mandando la información que obtenemos de los selectores del initialState.
 - Este endpoint nos regresará un isLoading, isError y una data que contendrá la lista de Items, total, pageSize y pageNumber.
 
 ```ruby linenums="1"
@@ -285,6 +290,10 @@ const {
 		filters: viewFilter ? viewFilter : '',
 	})
 ```
+
+Podemos confirmar que recibimos información de back mandando a consola él data y podemos ver qué información revivimos:
+
+La lista de item podemos ver la información que recibimos y aquí podemos determinar que información queremos que aparezca y podemos agregar los campos en la configuración de la tabla:
 
 Generaremos métodos para llamar las acciones que permitan modificar el paginado y ordenamiento:
 
@@ -323,10 +332,10 @@ const [localTableConfig, setLocalTableConfig] = useState([])
 	 * Get the header configuration
 	 */
 	const enhancedConfiguration = localTableConfig.map((config) => {
-		switch (config.dataSource) {
+		switch (config.dataSource) {//indicamos la columna que queremos modificar
 			case 'startDate':
 				config.onRenderProperty = (item) => {
-					return moment(item.startDate).format('DD/MM/YYYY')
+					return moment(item.startDate).format('DD/MM/YYYY')//El cambio que queremos realizar
 				}
 				break
 			case 'endDate':
@@ -342,6 +351,9 @@ const [localTableConfig, setLocalTableConfig] = useState([])
 ````
 
 Ahora llamamos la tabla y le pasamos los valores correspondientes:
+-Pasamos la configuración de la tabla
+-la lista de item que recibimos del data
+-Agregamos el método de ordenamiento y paginados
 
 ```ruby linenums="1"
 	<Box>
