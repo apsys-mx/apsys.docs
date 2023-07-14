@@ -1082,7 +1082,8 @@
 <ul>
 <li><img alt="Untitled" src="../Resources/configurationTable.png" /></li>
 </ul>
-<p>Este archivo contiene la confirmación de las columnas que se mostraran en la tabla:</p>
+<p>Este archivo contiene la confirmación de la tabla, aquí indicamos las columnas que queremos que aparecen en la tabla:
+|</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
@@ -1105,7 +1106,7 @@
 <span class="normal"><a href="#__codelineno-8-20">20</a></span>
 <span class="normal"><a href="#__codelineno-8-21">21</a></span>
 <span class="normal"><a href="#__codelineno-8-22">22</a></span>
-<span class="normal"><a href="#__codelineno-8-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="n">export</span> <span class="n">const</span> <span class="n">defaultTableConfigurationTimeSheets</span> <span class="o">=</span> <span class="o">[</span>
+<span class="normal"><a href="#__codelineno-8-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="n">export</span> <span class="n">const</span> <span class="n">localTableConfig</span> <span class="o">=</span> <span class="o">[</span>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2"></a>    <span class="p">{</span>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3"></a>       <span class="ss">title</span><span class="p">:</span> <span class="s1">&#39;Codigo del proyecto&#39;</span><span class="p">,</span> <span class="sr">//</span><span class="o">=&gt;</span><span class="no">Nombre</span> <span class="n">de</span> <span class="n">la</span> <span class="n">columna</span>
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4"></a>        <span class="ss">sortable</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span> <span class="sr">//</span><span class="o">=&gt;</span><span class="no">Si</span> <span class="n">aplicará</span> <span class="n">ordenmiento</span> <span class="n">en</span> <span class="n">la</span> <span class="n">columna</span>
@@ -1130,10 +1131,12 @@
 </span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23"></a><span class="o">]</span>
 </span></code></pre></div></td></tr></table></div>
 <h4 id="implementar-datagrid"><strong>Implementar DataGrid </strong></h4>
-<p>Genera un nuevo archivo con el nombre de la tabla, en este documento importarás la configuración anterior de la tabla, así como el archivo de datagrid ya configurado en el proyecto base.</p>
+<p>Genera un nuevo archivo o buscamos el archivo donde queremos implementar la tabla:</p>
 <p><img alt="Untitled" src="../Resources/home.png" /></p>
+<p>En este documento importarás la configuración anterior de la tabla, así como el archivo de datagrid y el paginado ya configurado en el proyecto base.</p>
+<p><img alt="Untitled" src="../Resources/import.png" /></p>
 <ul>
-<li>Es nesario llamar los selectors para obtener el paginado, ordenamiento y filtros:</li>
+<li>Es necesario llamar los selectors para obtener el paginado, ordenamiento y filtros:</li>
 </ul>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="n">import</span> <span class="o">*</span> <span class="n">as</span> <span class="n">selectors</span> <span class="n">from</span> <span class="s1">&#39;../home.selectors&#39;</span>
 </span></code></pre></div></td></tr></table></div>
@@ -1144,7 +1147,7 @@
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3"></a>    <span class="n">const</span> <span class="n">viewFilter</span> <span class="o">=</span> <span class="n">useSelector</span><span class="p">((</span><span class="n">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">selectors</span><span class="o">.</span><span class="n">getFilters</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
 </span></code></pre></div></td></tr></table></div>
 <ul>
-<li>LLamar el endpoint que realizamos para obtener la información del back mandando la información que obtenemos de los selectores del initialState.</li>
+<li>Llamar el endpoint que realizamos para obtener la información del back mandando la información que obtenemos de los selectores del initialState.</li>
 <li>Este endpoint nos regresará un isLoading, isError y una data que contendrá la lista de Items, total, pageSize y pageNumber.</li>
 </ul>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
@@ -1179,6 +1182,8 @@
 </span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15"></a>        <span class="ss">filters</span><span class="p">:</span> <span class="n">viewFilter</span> <span class="p">?</span> <span class="n">viewFilter</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
 </span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16"></a>    <span class="p">})</span>
 </span></code></pre></div></td></tr></table></div>
+<p>Podemos confirmar que recibimos información de back mandando a consola él data y podemos ver qué información revivimos:</p>
+<p>La lista de item podemos ver la información que recibimos y aquí podemos determinar que información queremos que aparezca y podemos agregar los campos en la configuración de la tabla:</p>
 <p>Generaremos métodos para llamar las acciones que permitan modificar el paginado y ordenamiento:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
@@ -1254,10 +1259,10 @@
 </span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11"></a><span class="sr">     * Get the header configuration</span>
 </span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12"></a><span class="sr">     */</span>
 </span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13"></a>    <span class="n">const</span> <span class="n">enhancedConfiguration</span> <span class="o">=</span> <span class="n">localTableConfig</span><span class="o">.</span><span class="n">map</span><span class="p">((</span><span class="n">config</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14"></a>        <span class="n">switch</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dataSource</span><span class="p">)</span> <span class="p">{</span>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14"></a>        <span class="n">switch</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dataSource</span><span class="p">)</span> <span class="p">{</span><span class="o">//</span><span class="n">indicamos</span> <span class="n">la</span> <span class="n">columna</span> <span class="n">que</span> <span class="n">queremos</span> <span class="n">modificar</span>
 </span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15"></a>            <span class="k">case</span> <span class="s1">&#39;startDate&#39;</span><span class="p">:</span>
 </span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16"></a>                <span class="n">config</span><span class="o">.</span><span class="n">onRenderProperty</span> <span class="o">=</span> <span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17"></a>                    <span class="k">return</span> <span class="n">moment</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startDate</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;DD/MM/YYYY&#39;</span><span class="p">)</span>
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17"></a>                    <span class="k">return</span> <span class="n">moment</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startDate</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;DD/MM/YYYY&#39;</span><span class="p">)</span><span class="o">//</span><span class="no">El</span> <span class="n">cambio</span> <span class="n">que</span> <span class="n">queremos</span> <span class="n">realizar</span>
 </span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18"></a>                <span class="p">}</span>
 </span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19"></a>                <span class="k">break</span>
 </span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20"></a>            <span class="k">case</span> <span class="s1">&#39;endDate&#39;</span><span class="p">:</span>
@@ -1271,7 +1276,10 @@
 </span><span id="__span-13-28"><a id="__codelineno-13-28" name="__codelineno-13-28"></a>    <span class="p">})</span>
 </span><span id="__span-13-29"><a id="__codelineno-13-29" name="__codelineno-13-29"></a>    <span class="sb">```</span>
 </span></code></pre></div></td></tr></table></div>
-<p>Ahora llamamos la tabla y le pasamos los valores correspondientes:</p>
+<p>Ahora llamamos la tabla y le pasamos los valores correspondientes:
+-Pasamos la configuración de la tabla
+-la lista de item que recibimos del data
+-Agregamos el método de ordenamiento y paginados</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-14-3"> 3</a></span>
