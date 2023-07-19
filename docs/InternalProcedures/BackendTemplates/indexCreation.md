@@ -10,7 +10,7 @@ proyecto llamado apsys.pokedex
 
 ![Untitled](Resources/01Create-project%20(1).png)
 
-Hay que descargar el respaldo de la base de datos por medio del siguiente link: [Pokedex DB](pokedex.bak "download")
+Hay que descargar el respaldo de la base de datos por medio del siguiente link: [Pokedex DB](PokedexDB.zip "download")
 
 Tambien iniciaremos el Microsoft SQL Management Studio y crearemos una nueva base de datos con el nombre *pokedex.devel*.
 
@@ -51,7 +51,7 @@ Nos situamos en el explorador de la solución donde se denotan cuatro capas **do
 
 La primera capa que trabajaremos sera la que corresponde al dominio. 
 
-Como siguiente paso agregaremos las clases que usaremos para lalógica de nuestra aplicación. La primera de ellas sera la clase que va a representar un producto de la aplicación y dicha clase la nombraremos *Pokemon*.
+Como siguiente paso agregaremos las clases que usaremos para la lógica de nuestra aplicación. La primera de ellas sera la clase que va a representar un producto de la aplicación y dicha clase la nombraremos *Pokemon*.
 
 ![Untitled](Resources/13Create-class.png)
 
@@ -74,13 +74,13 @@ namespace apsys.pokedex
 Por el momento solo agregaremos este bloque de codigo en la clase, continuamos en el siguiente paso.
 
 Lo siguiente sera trabajar en nuestra capa de datos. Primero crearemos la interfaz del repositorio que se relaciona con la tabla de pokemons en la base de datos, en el proyecto de
-repositorios agregamos una nueva interfaz llamada *IPokemonRepository*.
+repositorios agregamos una nueva interfaz llamada *IPokemonsRepository*.
 
 ![Untitled](Resources/21Pokemons-interface.png)
 
 ![Untitled](Resources/22Pokemons-interface.png)
 
-Se debe de insertar el siguinete codigo en la interfaz *IPokemonInterfaz*
+Se debe de insertar el siguinete codigo en la interfaz *IPokemonsRepository*
 
 ```ruby
 using apsys.pokedex;
@@ -96,11 +96,11 @@ namespace apsys.pokedex.repositories
 
 Siendo que la interfaz mencionada solo define el contrato del repositorio ahora debemos crear una clase que implemente este repositorio, dicha clase la vamos a agregar en
 el proyecto de repositorios para *NHibernate* (el proceso a seguir para agregar una clase es el mismo que anteriormente presentamos en este tutorial con la clase *Pokemon*), 
-agregamos la clase *PokemonRepository*
+agregamos la clase *PokemonsRepository*
 
 ![Untitled](Resources/23Pokemons-repository.png)
 
-El codigo a insertar en la clase *PokemonRepository* es el siguiente:
+El codigo a insertar en la clase *PokemonsRepository* es el siguiente:
 
 ```ruby 
 using apsys.pokedex;
@@ -228,9 +228,61 @@ namespace apsys.pokedex.services
 }
 ```
 
+Al agregar el código anterior el IDE nos mostrara algunos errores, para hacer la correción de dichos errores, agregaremos una referencia al proyecto de servicios, tal como se muestra en la 
+siguiente imagen.
+
+![Untitled](Resources/31_Add_reference.png)
+
+![Untitled](Resources/32_Add_reference.png)
+
 Para el último tramo de este tutorial trabajaremos en la capa correspondiente a la *webapi* para codificar el  *endpoint* que nos permitira obtener los datos de los pokemons.
 Iniciamos creando el controlador *PokemonsController* en la carpeta de controladores del proyecto ```apsys.pokedex.webapi```
 
 ![Untitled](Resources/28Pokemons-controller.png)
 
+El codigo para el controlador *PokemonsController* es el siguiente:
 
+```ruby
+using apsys.pokedex.services;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+
+namespace apsys.pokedex.webapi.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class PokemonsController : WebApiControllerBase
+    {
+        public PokemonsController(ILogger<WebApiControllerBase> logger, IMediator mediator, IWebHostEnvironment webHostEnvironment)
+            : base(logger, mediator, webHostEnvironment)
+        {
+        }
+
+        [HttpGet, Route("")]
+        public async Task<IActionResult> Search()
+        {
+            try
+            {
+                string queryString = HttpContext.Request.QueryString.Value;
+                var command = new PokemonsSearcher.Query(queryString);
+                var result = await _mediator.Send(command);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, "Error getting pokemons");
+                return BadRequest(ex);
+            }
+        }
+    }
+}
+
+```
+Por último modificaremos la cadena de conexión para nuestra base de datos con la webapi.
+
+![Untitled](Resources/29Connection-string.png)
+
+Para probar que nuestro *endpoint* este funcionando correctamente ejecutaremos la aplicación y podemos usar un cliente como el software *Postman*
+o alguna extensión de *VSCode*, como lo son *Thunder cliente* o *RapidApiClient* y hacer la solicitud de la API como se muestra en la siguiente imagen,  considera que es probable que el puerto sea diferente al que se muestra en la imagén.
+
+![Untitled](Resources/30Cliente.png)
