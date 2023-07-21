@@ -564,6 +564,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../filters/" class="md-nav__link">
+        Implementar Filtros
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../FAQ/" class="md-nav__link">
         FAQ's
       </a>
@@ -721,6 +735,98 @@
 <p>Cambiamos o creamos el branch a devel</p>
 <p><img alt="Untitled" src="Resources/changeBranch.png" />
 <img alt="Untitled" src="Resources/branch.png" /></p>
+<p>Revisamos la versión de node que tengamos instalas, abrimos una consola como administrador.
+<code>nvm list</code></p>
+<p><img alt="Untitled" src="Resources/node.png" /></p>
+<p>Utilizamos la 18.13.0, si no la tenemos la instalamos.</p>
+<p><code>nvm use 18.16.0</code> o instalamos <code>nvm install 18.13.0</code>
+<img alt="Untitled" src="Resources/nvmUse.png" /></p>
+<p>Abrimos el protecto y abrimos la consola y comenzamos cons instalar los paquetes:</p>
+<p>Ahora ejecutamos el proyecto con <code>npm install</code></p>
+<p><img alt="Untitled" src="Resources/npmInstall.png" /></p>
+<p>Inicializamos el proyecto:</p>
+<p><img alt="Untitled" src="Resources/runDev.png" /></p>
+<p>Nos debe de aparecer la vista de inicio ingresamos ala plataforma:</p>
+<p><img alt="Untitled" src="Resources/inicio.png" /></p>
+<p>Si nos aparece este error debemos de inicializar el usuario:</p>
+<p><img alt="Untitled" src="Resources/error.png" /></p>
+<p>Ingresamos el postman:
+<img alt="Untitled" src="Resources/postman2.png" /></p>
+<p>-agregamos la siguiente ruta:
+<code>http://localhost:57065/clients</code></p>
+<p>-Indicamos que sea un método post</p>
+<p>-Agregamos lo siguiente en el body:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>   <span class="s2">&quot;ClientId&quot;</span><span class="ss">:&quot;apsys.frontend.base&quot;</span><span class="p">,</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>   <span class="s2">&quot;ClientName&quot;</span><span class="ss">:&quot;SIT Alpunto Web Application&quot;</span><span class="p">,</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>   <span class="s2">&quot;AllowedGrantTypes&quot;</span><span class="p">:</span><span class="o">[</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>      <span class="s2">&quot;implicit&quot;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a>   <span class="o">]</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a>   <span class="s2">&quot;AllowAccessTokensViaBrowser&quot;</span><span class="ss">:true</span><span class="p">,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a>   <span class="s2">&quot;AlwaysIncludeUserClaimsInIdToken&quot;</span><span class="ss">:true</span><span class="p">,</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9"></a>   <span class="s2">&quot;AllowedCorsOrigins&quot;</span><span class="p">:</span><span class="o">[</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10"></a>        <span class="s2">&quot;http://localhost:5173&quot;</span><span class="p">,</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11"></a>        <span class="s2">&quot;http://127.0.0.1:5173&quot;</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12"></a>   <span class="o">]</span><span class="p">,</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13"></a>   <span class="s2">&quot;RedirectUris&quot;</span><span class="p">:</span><span class="o">[</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14"></a>        <span class="s2">&quot;http://localhost:5173/callback&quot;</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15"></a>        <span class="s2">&quot;http://127.0.0.1:5173/callback&quot;</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16"></a>   <span class="o">]</span><span class="p">,</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17"></a>   <span class="s2">&quot;PostLogoutRedirectUris&quot;</span><span class="p">:</span><span class="o">[</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18"></a>        <span class="s2">&quot;http://localhost:5173&quot;</span><span class="p">,</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19"></a>        <span class="s2">&quot;http://127.0.0.1:5173&quot;</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20"></a>   <span class="o">]</span><span class="p">,</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21"></a>   <span class="s2">&quot;AllowedScopes&quot;</span><span class="p">:</span><span class="o">[</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22"></a>        <span class="s2">&quot;openid&quot;</span><span class="p">,</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23"></a>        <span class="s2">&quot;profile&quot;</span><span class="p">,</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24"></a>        <span class="s2">&quot;userprofile&quot;</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25"></a>   <span class="o">]</span><span class="p">,</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26"></a>   <span class="s2">&quot;RequireConsent&quot;</span><span class="ss">:false</span><span class="p">,</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27"></a>   <span class="s2">&quot;ClientSecrets&quot;</span><span class="p">:</span><span class="o">[</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28"></a>      <span class="p">{</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29"></a>         <span class="s2">&quot;value&quot;</span><span class="ss">:&quot;8bzLMAwmmlPbMWSeXmMp8qOo3yKhPCN85Ws28Qswhe8=&quot;</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30"></a>      <span class="p">}</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31"></a>   <span class="o">]</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="p">}</span>
+</span></code></pre></div></td></tr></table></div>
+<p>-Ingresar clientId el id de tu proyecto del front:
+<img alt="Untitled" src="Resources/id.png" /></p>
+<p>-En AllowedCorsOrigins, PostLogoutRedirectUris agregamos la ruta del front, y para RedirectUris asignamos a la ruta agregando <code>/callback</code>
+<img alt="Untitled" src="Resources/idClient.png" /></p>
+<p>-Confirmamos que estén todos los campos como se ve en la imagen y para finalizar enviamos la petición y nos debe dar una repuesta ok:</p>
+<p><img alt="Untitled" src="Resources/postman2.png" /></p>
+<p>-</p>
 
 
 
