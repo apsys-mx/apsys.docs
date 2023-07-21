@@ -101,7 +101,8 @@ export const { useGetPokemonQuery, useGetCatalogsQuery } = pokemonEndPoint
 
 !!! Nota
     Buscamos el archivo `filter-menu.jsx`  
-    Validamos la ruta el método `useGetCatalogsQuery`, que creamos en las api validamos la ruta de importación.
+
+    Validamos la ruta el método `useGetCatalogsQuery`, que creamos en las api. Validamos la ruta de importación.
 
 ![Untitled](Resources/catalogQuery.png)
 
