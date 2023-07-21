@@ -99,6 +99,14 @@ export const pokemonEndPoint = pokemonApi.injectEndpoints({
 export const { useGetPokemonQuery, useGetCatalogsQuery } = pokemonEndPoint
 ```
 
+####Nota
+
+Buscamos el archivo `filter-menu.jsx`
+
+Validamos la ruta el metodo `useGetCatalogsQuery`, que creamos en las api validamos la ruta de importaión
+
+- ![Untitled](Resources/catalogQuery.png)
+
 #### **Archivo Slice **
 
 -El achivo Slice es aquel donde se encuentra la configuración del initialState: La cual contiene paginación, ordenamiento y filtros.
@@ -174,9 +182,9 @@ export default homeSlice.reducer
 
 - Archivos que contenga los Selectors: Donde obtendremos la información initialState
 
-- Si no existe el archivo selectors, crea uno y agrega los métodos faltantes
-
 - ![Untitled](Resources/selectors.png)
+
+- Si no existe el archivo selectors, crea uno y agrega los métodos faltantes
 
 ```ruby linenums="1"
 import { createSelector } from 'reselect'
