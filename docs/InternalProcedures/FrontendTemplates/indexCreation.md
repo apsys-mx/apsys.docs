@@ -12,7 +12,7 @@ Abre la consola de visual:
 
 ![Untitled](Resources/console.png)
 
-Instala los siguientes paquetes en caso de no esten instalados para confirmar verifica en el a
+Instala los siguientes paquetes, en caso de no esten instalados. Y verifica que esten istalados en el archivo `package-lock.json`.
 
 - Install moment
 
@@ -44,7 +44,7 @@ Conecta el backend con el frontend, este proceso es diferente de acuerdo con el 
 
 Para comprobar si el back está conectado con el front entra a la carpeta `store` y ahí debe de haber un archivo donde se configura la URL donde nos vamos a conectar al back.
 
-- ![Untitled](Resources/urlBack.png)
+![Untitled](Resources/urlBack.png)
 
 Comprobamos si la URL corresponde con la del back:
 
@@ -58,7 +58,7 @@ Si no existe el archivo donde se configuran los endpoints, crea uno para comenza
 
 Creada a partir del módulo a trabajar, para este ejemplo seria: => `home.endPoints.js`
 
-- ![Untitled](Resources/endPoint.png)
+![Untitled](Resources/endPoint.png)
 
 Estructura del endpoint para obtener la información aplicando paginado, filtros y ordenamiento.
 
