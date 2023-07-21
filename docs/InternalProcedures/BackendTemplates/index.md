@@ -22,7 +22,7 @@ Se desplegara un pequeño menú del cual daremos click en el Administrador de ex
 
 ![Untitled](Resources/Untitled%203.png)
 
-Deberemos descargar el “ApsysBaseTemplate” y nos aparecerá un mensaje emergente, el cual indicara que la instalación se llevara a cabo posterior a cerrar **Visual Studio.**
+Deberemos descargar el "UserTemplate” y nos aparecerá un mensaje emergente, el cual indicara que la instalación se llevara a cabo posterior a cerrar **Visual Studio.**
 
 ![Untitled](Resources/Untitled%204.png)
 
