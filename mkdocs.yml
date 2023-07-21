@@ -73,6 +73,7 @@ nav:
       - Plantillas Frontend:
           - Instalación y uso de Plantillas: "InternalProcedures/FrontendTemplates/index.md"
           - Crear un indice desde una plantilla: "InternalProcedures/FrontendTemplates/indexCreation.md"
+      - Implementar Filtros: "InternalProcedures/filters.md" 
       - FAQ's: "InternalProcedures/FAQ.md"
   - Documentación de Proyectos:
       - Inicio: "ProjectDocs/index.md"
