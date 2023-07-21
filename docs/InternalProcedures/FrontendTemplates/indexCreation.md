@@ -38,7 +38,7 @@ npm install react-select
 npm install react-date-range
 ```
 
-#### **Archivo endpoint**
+### **Archivo endpoint**
 
 Conecta el backend con el frontend, este proceso es diferente de acuerdo con el proyecto.
 
@@ -50,7 +50,7 @@ Comprobamos si la URL corresponde con la del back:
 
 ![Untitled](Resources/urlFront.png)
 
-## Configuración del api Slice
+### **Configuración del api Slice**
 
 Para obtener la información del index se debe generar un endpoint para realizar la petición de back.
 
@@ -99,25 +99,23 @@ export const pokemonEndPoint = pokemonApi.injectEndpoints({
 export const { useGetPokemonQuery, useGetCatalogsQuery } = pokemonEndPoint
 ```
 
-####Nota
+!!! Nota
+    Buscamos el archivo `filter-menu.jsx`  
+    Validamos la ruta el método `useGetCatalogsQuery`, que creamos en las api validamos la ruta de importación.
 
-Buscamos el archivo `filter-menu.jsx`
+![Untitled](Resources/catalogQuery.png)
 
-Validamos la ruta el metodo `useGetCatalogsQuery`, que creamos en las api validamos la ruta de importaión
+### **Archivo Slice**
 
-- ![Untitled](Resources/catalogQuery.png)
+El Achivo Slice es aquel donde se encuentra la configuración del initialState: La cual contiene paginación, ordenamiento y filtros.
 
-#### **Archivo Slice **
-
--El achivo Slice es aquel donde se encuentra la configuración del initialState: La cual contiene paginación, ordenamiento y filtros.
-
-- El listado de reducers: Para la actualización de initialState.
+El listado de reducers: Para la actualización de initialState.
 
 Si no existe el archivo slice, crea uno para configurar el initialState.
 
-- ![Untitled](Resources/slice.png)
+![Untitled](Resources/slice.png)
 
--En caso de que exista agregar los métodos faltantes.
+En caso de que exista, agregar los métodos faltantes.
 
 ```ruby linenums="1"
 
@@ -178,13 +176,15 @@ export const {
 export default homeSlice.reducer
 ```
 
-#### **Archivo Selectors **
+### **Archivo Selectors **
 
-- Archivos que contenga los Selectors: Donde obtendremos la información initialState
+El archivo selectors el aquel que tiene la información del estado global de la aplicación.
 
-- ![Untitled](Resources/selectors.png)
+Archivos que contenga los Selectors: Donde obtendremos la información initialState
 
-- Si no existe el archivo selectors, crea uno y agrega los métodos faltantes
+![Untitled](Resources/selectors.png)
+
+Si no existe el archivo selectors, crea uno y agrega los métodos faltantes
 
 ```ruby linenums="1"
 import { createSelector } from 'reselect'
@@ -214,14 +214,14 @@ export {  getPagination, getSorting, getFilters, getViewState }
 
 Para generar la tabla, es necesario revisar si contamos con los siguientes archivos y que contenga la siguiente información:
 
-### **Crear configuración de tabla**
+### ** Crear configuración de tabla**
 
 Crear el archivo `configurationTable.jsx`
 
-- ![Untitled](Resources/configurationTable.png)
+![Untitled](Resources/configurationTable.png)
 
 Este archivo contiene la confirmación de la tabla, aquí indicamos las columnas que queremos que aparecen en la tabla:
-|
+
 
 ```ruby linenums="1"
 export const defaultTableConfiguration = [
@@ -250,9 +250,9 @@ export const defaultTableConfiguration = [
 ]
 ```
 
-#### **Implementar DataGrid **
+### **Implementar DataGrid **
 
-Generamos o buscamos los siguientes archivos `home.jsx y home.template.jsx`donde emplementaremos la tabla:
+Generamos o buscamos los siguientes archivos `home.jsx y home.template.jsx` donde implementaremos la tabla:
 
 ![Untitled](Resources/home.png)
 
@@ -321,7 +321,7 @@ Podemos confirmar que recibimos información de back mandando a consola él data
 
 ![Untitled](Resources/BrowserConsole.png)
 
-La lista de item podemos ver la información que recibimos y aquí podemos determinar que información queremos que aparezca y podemos agregar los campos en la configuración de la tabla:
+La lista de item podemos ver la información que recibimos y aquí podemos determinar qué información queremos que aparezca y podemos agregar los campos en la configuración de la tabla:
 
 Ahora creamos un documento `home.table.jsx`
 
@@ -330,7 +330,7 @@ Ahora creamos un documento `home.table.jsx`
 - Empezamos a importar la tabla
 - Se pasa la configuración de la tabla, tableConfig.
 - Se indica la columna que quieres modificar y el cambio que quieras realizar
-- Pasamos la información que se resive de las props
+- Pasamos la información que se resibe de las props
 
 ```ruby linenums="1"
 import React, { useEffect, useState } from 'react'
@@ -400,7 +400,7 @@ export default HomeTable
 
 ```
 
-Vamos al archivo `home.template.jsx` y agregamos el siguiente código donde el metodo para crear la tabla y el paginado:
+Vamos al archivo `home.template.jsx` y agregamos el siguiente código donde el método para crear la tabla y el paginado:
 
 ```ruby linenums="1"
 import React from 'react'
