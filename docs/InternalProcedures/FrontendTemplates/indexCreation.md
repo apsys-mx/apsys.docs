@@ -293,6 +293,8 @@ const {
 
 Podemos confirmar que recibimos información de back mandando a consola él data y podemos ver qué información revivimos:
 
+![Untitled](Resources/import.png)
+
 La lista de item podemos ver la información que recibimos y aquí podemos determinar que información queremos que aparezca y podemos agregar los campos en la configuración de la tabla:
 
 Generaremos métodos para llamar las acciones que permitan modificar el paginado y ordenamiento:
