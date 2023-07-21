@@ -40,9 +40,9 @@ npm install react-date-range
 
 #### **Archivo endpoint**
 
-Conecta el backend con el frontend, este proceso es diferente de acuerdo al proyecto.
+Conecta el backend con el frontend, este proceso es diferente de acuerdo con el proyecto.
 
-Para comprobar si el back está conectado con el front entra a la carpeta `store` y ahí debe de haber una archivo donde se configura la URL donde nos vamos a conectar al back.
+Para comprobar si el back está conectado con el front entra a la carpeta `store` y ahí debe de haber un archivo donde se configura la URL donde nos vamos a conectar al back.
 
 - ![Untitled](Resources/urlBack.png)
 
@@ -56,13 +56,13 @@ Para obtener la información del index se debe generar un endpoint para realizar
 
 Si no existe el archivo donde se configuran los endpoints, crea uno para comenzar a crear los métodos donde vamos a obtener la información del back y los catálogos para los filtros.
 
-Creada a partir del modulo a trabajar, para este ejemplo seria: `>home.endPoints.js`
+Creada a partir del módulo a trabajar, para este ejemplo seria: => `home.endPoints.js`
 
 - ![Untitled](Resources/endPoint.png)
 
 Estructura del endpoint para obtener la información aplicando paginado, filtros y ordenamiento.
 
-- Especificamos por la columna se va a ordenar la información. En el ejemplo indicamos =>`CreationDate`
+- Especificamos por la columna se va a ordenar la información. En el ejemplo indicamos => `CreationDate`
 
 ```ruby linenums="1"
 import { timesheetsApi } from '../../store/timesheet-api'
@@ -114,7 +114,7 @@ Si no existe el archivo slice, crea uno para configurar el initialState.
 
 - ![Untitled](Resources/slice.png)
 
--En caso de que exista agregar los metodos faltantes.
+-En caso de que exista agregar los métodos faltantes.
 
 ```ruby linenums="1"
 
@@ -179,7 +179,7 @@ export default homeSlice.reducer
 
 - Archivos que contenga los Selectors: Donde obtendremos la información initialState
 
-- Si no existe el archivo selectors, crea uno y agrega los metodos faltantes
+- Si no existe el archivo selectors, crea uno y agrega los métodos faltantes
 
 - ![Untitled](Resources/selectors.png)
 
@@ -291,11 +291,15 @@ const {
 	})
 ```
 
-Podemos confirmar que recibimos información de back mandando a consola él data y podemos ver qué información revivimos:
+Podemos confirmar que recibimos información de back mandando a consola él data y podemos ver qué información revivimos en el navegador:
+
+![Untitled](Resources/ConsoleLogData.png)
 
 ![Untitled](Resources/import.png)
 
 La lista de item podemos ver la información que recibimos y aquí podemos determinar que información queremos que aparezca y podemos agregar los campos en la configuración de la tabla:
+
+![Untitled](Resources/BrowserConsole.png)
 
 Generaremos métodos para llamar las acciones que permitan modificar el paginado y ordenamiento:
 
