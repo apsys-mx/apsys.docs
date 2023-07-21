@@ -48,7 +48,7 @@ Para comprobar si el back está conectado con el front entra a la carpeta `store
 
 Comprobamos si la URL corresponde con la del back:
 
-- ![Untitled](Resources/urlFront.png)
+![Untitled](Resources/urlFront.png)
 
 ## Configuración del api Slice
 
