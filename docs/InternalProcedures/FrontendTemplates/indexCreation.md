@@ -12,7 +12,7 @@ Abre la consola de visual:
 
 ![Untitled](Resources/console.png)
 
-Instala los siguientes paquetes que contendrán lo requerido para el funcionamiento del Índice.
+Instala los siguientes paquetes en caso de no esten instalados para confirmar verifica en el a
 
 - Install moment
 
@@ -63,12 +63,13 @@ Creada a partir del módulo a trabajar, para este ejemplo seria: => `home.endPoi
 Estructura del endpoint para obtener la información aplicando paginado, filtros y ordenamiento.
 
 - Especificamos por la columna se va a ordenar la información. En el ejemplo indicamos => `CreationDate`
+- Adicional se agrega un endpoint para obtener la lista de catálogo para aplicar en los filtros con el nombre `getCatalogs`
 
 ```ruby linenums="1"
-import { timesheetsApi } from '../../store/timesheet-api'
-export const timesheetsEndPoint = timesheetsApi.injectEndpoints({
+import { pokemonApi } from '../../store/timesheet-api'
+export const pokemonEndPoint = pokemonApi.injectEndpoints({
     endpoints: (builder) => ({
-        getTimesheets: builder.query({
+        getPokemon: builder.query({
             query(params) {
                 const { sorting, pagination, filters } = params
                 var { sortBy, sortDirection } = sorting
@@ -76,32 +77,26 @@ export const timesheetsEndPoint = timesheetsApi.injectEndpoints({
                 pageNumber = pageNumber ? pageNumber : 0
                 pageSize = pageSize ? pageSize : 0
                 sortDirection = sortDirection && sortDirection.length > 0 ? sortDirection : 'desc'
-                sortBy = sortBy && sortBy.length > 0 ? sortBy : 'projectName'
-                var url = `Timesheets?sortBy=${sortBy}&sortDirection=${sortDirection}&pageNumber=${pageNumber}&pageSize=${pageSize}&${filters}`
+                sortBy = sortBy && sortBy.length > 0 ? sortBy : 'Name'
+                var url = `pokemons?sortBy=${sortBy}&sortDirection=${sortDirection}&pageNumber=${pageNumber}&pageSize=${pageSize}&${filters}`
                 return {
                     url: url,
                     method: 'GET',
                 }
             },
         }),
-
+        getCatalogs: builder.query({
+            query(fieldName) {
+                return {
+                    url: `pokemons/catalogs/${fieldName}`,
+                    method: 'GET',
+                }
+            },
+        }),
     }),
     overrideExisting: true,
 })
-export const { useGetTimesheetsQuery, useGetCatalogsQuery } = timesheetsEndPoint
-```
-
-Adicional se agrega un endpoint para obtener la lista de catálogo para aplicar en los filtros con el nombre `getCatalogs`:
-
-```ruby linenums="1"
-getCatalogs: builder.query({
-			query(fieldName) {
-				return {
-					url: `Timesheets/catalogs/${fieldName}`,
-					method: 'GET',
-				}
-			},
-		}),
+export const { useGetPokemonQuery, useGetCatalogsQuery } = pokemonEndPoint
 ```
 
 #### **Archivo Slice **
@@ -213,7 +208,7 @@ Para generar la tabla, es necesario revisar si contamos con los siguientes archi
 
 ### **Crear configuración de tabla**
 
-Crear el archivo 'configurationTable.jsx'
+Crear el archivo `configurationTable.jsx`
 
 - ![Untitled](Resources/configurationTable.png)
 
@@ -221,164 +216,219 @@ Este archivo contiene la confirmación de la tabla, aquí indicamos las columnas
 |
 
 ```ruby linenums="1"
-export const localTableConfig = [
+export const defaultTableConfiguration = [
     {
-       title: 'Codigo del proyecto', //=>Nombre de la columna
-		sortable: true, //=>Si aplicará ordenmiento en la columna
-		dataSource: 'projectCode', //=>Nombre que regrea el back
-		isActiveFilter: true, //=>Si aplicará filtro en la columna
-		filterType: 'text', //=>>El tipo de filtro
+        title: 'Pokemon', //=>Nombre de la columna
+        sortable: true, //=>Si aplicará ordenmiento en la columna
+        dataSource: 'name', //=>Nombre que regrea el back
+        isActiveFilter: true, //=>Si aplicará filtro en la columna
+        filterType: 'text', //=>>El tipo de filtro
     },
-        {
-        title: 'Fecha de inicio',
+    {
+        title: 'Codigo',
         sortable: true,
-        dataSource: 'startDate',
+        dataSource: 'code',
+        isActiveFilter: true,
+        filterType: 'text',
+    },
+    {
+        title: 'Fecha de creacion',
+        sortable: true,
+        dataSource: 'creationDate',
         isActiveFilter: true,
         filterType: 'date',
     },
-        {
-        title: 'Duración',
-        sortable: true,
-        dataSource: 'duration',
-        isActiveFilter: true,
-        filterType: 'numeric',
-    },
-]
 
+]
 ```
 
 #### **Implementar DataGrid **
 
-Genera un nuevo archivo o buscamos el archivo donde queremos implementar la tabla:
+Generamos o buscamos los siguientes archivos `home.jsx y home.template.jsx`donde emplementaremos la tabla:
 
 ![Untitled](Resources/home.png)
 
 En este documento importarás la configuración anterior de la tabla, así como el archivo de datagrid y el paginado ya configurado en el proyecto base.
 
-![Untitled](Resources/import.png)
-
-- Es necesario llamar los selectors para obtener el paginado, ordenamiento y filtros:
-
-```ruby linenums="1"
-import * as selectors from '../home.selectors'
-```
-
-```ruby linenums="1"
-	const viewPaginationState = useSelector((state) => selectors.getPagination(state))
-	const viewSortingState = useSelector((state) => selectors.getSorting(state))
-	const viewFilter = useSelector((state) => selectors.getFilters(state))
-```
-
+- Es necesario llamar los selectors para obtener el paginado, ordenamiento y filtros
 - Llamar el endpoint que realizamos para obtener la información del back mandando la información que obtenemos de los selectores del initialState.
 - Este endpoint nos regresará un isLoading, isError y una data que contendrá la lista de Items, total, pageSize y pageNumber.
+- Generaremos métodos para llamar las acciones que permitan modificar el paginado y ordenamiento:
 
 ```ruby linenums="1"
-const {
-		data: timeSheetsResponse,
-		isLoading,
-		isError,
-		error,
-	} = useGetTimesheetsQuery({
-		pagination: {
-			pageNumber: viewPaginationState.page,
-			pageSize: viewPaginationState.rowsPerPage,
-		},
-		sorting: {
-			sortBy: viewSortingState.sortBy,
-			sortDirection: viewSortingState.sortDirection,
-		},
-		filters: viewFilter ? viewFilter : '',
-	})
+import React from 'react'
+/** Import templates */
+import DesktopTemplate from './home.template'
+import { setPageNumber, setPageSize, setSorting } from '../home.slice'
+import { useDispatch, useSelector } from 'react-redux'
+import * as selectors from '../home.selector'
+import { useGetPokemonQuery } from '../home.endPoints'
+/** Home component */
+const Home = () => {
+    const dispatch = useDispatch()
+    const viewPaginationState = useSelector((state) => selectors.getPagination(state))
+    const viewSortingState = useSelector((state) => selectors.getSorting(state))
+    const viewFilter = useSelector((state) => selectors.getFilters(state))
+    const { data, isLoading, isError, error } = useGetPokemonQuery({
+        pagination: {
+            pageNumber: viewPaginationState.page,
+            pageSize: viewPaginationState.rowsPerPage,
+        },
+        sorting: {
+            sortBy: viewSortingState.sortBy,
+            sortDirection: viewSortingState.sortDirection,
+        },
+        filters: viewFilter ? viewFilter : '',
+    })
+    console.log('data', data)
+    const handleChangePage = (pageNumber) => {
+        dispatch(setPageNumber(pageNumber))
+    }
+    const handleChangeRowsPerPage = (pageSize) => {
+        dispatch(setPageSize(pageSize))
+    }
+    //:::::::::::::::::(Sorting):::::::::::::::::::::::::://
+    const onchangeSorting = (sort, direction) => {
+        dispatch(setSorting({ sortBy: sort, sortDirection: direction }))
+    }
+    return (
+        <div>
+            {data?.items?.length > 0 && (
+                <DesktopTemplate
+                    data={data}
+                    onChangePage={handleChangePage}
+                    handleChangeRowsPerPage={handleChangeRowsPerPage}
+                    onchangeSorting={onchangeSorting}
+                    sorting={viewSortingState}
+                />
+            )}
+        </div>
+    )
+}
+export default Home
+
 ```
 
 Podemos confirmar que recibimos información de back mandando a consola él data y podemos ver qué información revivimos en el navegador:
 
-![Untitled](Resources/ConsoleLogData.png)
-
-![Untitled](Resources/import.png)
+![Untitled](Resources/BrowserConsole.png)
 
 La lista de item podemos ver la información que recibimos y aquí podemos determinar que información queremos que aparezca y podemos agregar los campos en la configuración de la tabla:
 
-![Untitled](Resources/BrowserConsole.png)
+Ahora creamos un documento `home.table.jsx`
 
-Generaremos métodos para llamar las acciones que permitan modificar el paginado y ordenamiento:
+![Untitled](Resources/HomeTemplate.png)
 
-```ruby linenums="1"
- 	const handleChangePage = (pageNumber) => {
-		dispatch(setPageNumber(pageNumber))
-	}
-	const handleChangeRowsPerPage = (pageSize) => {
-		dispatch(setPageSize(pageSize))
-	}
-	//:::::::::::::::::::::::::::::::::::::::::::::::::::://
-	//:::::::::::::::::(Sorting):::::::::::::::::::::::::://
-	const onchangeSorting = (sort, direction) => {
-		dispatch(setSorting({ sortBy: sort, sortDirection: direction }))
-	}
-	//:::::::::::::::::::::::::::::::::::::::::::::::::::://
-```
-
-Si quieres realizar alguna modificación de las columnas puedes realizar la siguiente configuración:
-
+- Empezamos a importar la tabla
 - Se pasa la configuración de la tabla, tableConfig.
-
-- Se indica la tabla que quieres modificar y el cambio que quieras realizar
-
-````ruby linenums="1"
-const [localTableConfig, setLocalTableConfig] = useState([])
-	useEffect(() => {
-		if (tableConfig) {
-			var local = tableConfig.map((config) => {
-				return { ...config }
-			})
-			setLocalTableConfig(local)
-		}
-	}, [tableConfig])
-	/**
-	 * Get the header configuration
-	 */
-	const enhancedConfiguration = localTableConfig.map((config) => {
-		switch (config.dataSource) {//indicamos la columna que queremos modificar
-			case 'startDate':
-				config.onRenderProperty = (item) => {
-					return moment(item.startDate).format('DD/MM/YYYY')//El cambio que queremos realizar
-				}
-				break
-			case 'endDate':
-				config.onRenderProperty = (item) => {
-					return moment(item.endDate).format('DD/MM/YYYY')
-				}
-				break
-			default:
-		}
-		return config
-	})
-    ```
-````
-
-Ahora llamamos la tabla y le pasamos los valores correspondientes:
--Pasamos la configuración de la tabla
--la lista de item que recibimos del data
--Agregamos el método de ordenamiento y paginados
+- Se indica la columna que quieres modificar y el cambio que quieras realizar
+- Pasamos la información que se resive de las props
 
 ```ruby linenums="1"
-	<Box>
-
-			<DataGrid
-				headers={enhancedConfiguration}
-				data={data.items}
-				onchangeSorting={onchangeSorting}
-				sortBy={sortBy}
-				sortDirection={sortDirection}
-			/>
-			<Pagination
-				pagination={data}
-				onPageChange={handleChangePage}
-				onRowsPerPageChange={handleChangeRowsPerPage}
-			/>
-		</Box>
+import React, { useEffect, useState } from 'react'
+import propTypes from 'prop-types'
+//Templates
+import DataGrid from '../../common/datagrid/data-grid'
+import moment from 'moment'
+//
+const HomeTable = ({ items, tableConfig, onchangeSorting, sortBy, sortDirection }) => {
+    console.log(items)
+    /**
+     * State hook for configTable
+     */
+    const [localTableConfig, setLocalTableConfig] = useState([])
+    useEffect(() => {
+        if (tableConfig) {
+            var local = tableConfig.map((config) => {
+                return { ...config }
+            })
+            setLocalTableConfig(local)
+        }
+    }, [tableConfig])
+    /**
+     * Get the header configuration
+     */
+    const enhancedConfiguration = localTableConfig.map((config) => {
+        switch (config.dataSource) {
+            case 'startDate':
+                config.onRenderProperty = (item) => {
+                    return moment(item.startDate).format('DD/MM/YYYY')
+                }
+                break
+            case 'endDate':
+                config.onRenderProperty = (item) => {
+                    return moment(item.endDate).format('DD/MM/YYYY')
+                }
+                break
+            default:
+        }
+        return config
+    })
+    return (
+        <div>
+            <DataGrid
+                headers={enhancedConfiguration}
+                data={items}
+                onchangeSorting={onchangeSorting}
+                sortBy={sortBy}
+                sortDirection={sortDirection}
+            />
+        </div>
+    )
+}
+HomeTable.propTypes = {
+    items: propTypes.array,
+    onchangeSorting: propTypes.func,
+    handleChangePage: propTypes.func,
+    handleChangeRowsPerPage: propTypes.func,
+}
+HomeTable.defultProps = {
+    items: [],
+    onchangeSorting: () => console.warn('No [onchangeSorting] CallBack defined'),
+    handleChangePage: () => console.warn('No[handle change page] Callback defined'),
+    handleChangeRowsPerPage: () => console.warn('No[handle change rows per page] Callback defined'),
+}
+export default HomeTable
 
 ```
+
+Vamos al archivo `home.template.jsx` y agregamos el siguiente código donde el metodo para crear la tabla y el paginado:
+
+```ruby linenums="1"
+import React from 'react'
+import HomeTable from './home.table'
+import Pagination from '../../../features/common/datagrid/pagination'
+import { defaultTableConfiguration } from './configurationTable'
+/** Home component */
+const HomeTemplate = (props) => {
+    const { data, onChangePage, handleChangeRowsPerPage, onchangeSorting, sorting } = props
+    return (
+        <div>
+            <HomeTable
+                tableConfig={defaultTableConfiguration}
+                {...data}
+                onchangeSorting={onchangeSorting}
+                sortBy={
+                    sorting.sortBy && sorting.sortBy.length > 0 ? sorting.sortBy : 'projectName'
+                }
+                sortDirection={
+                    sorting.sortDirection && sorting.sortDirection.length > 0
+                        ? sorting.sortDirection
+                        : 'desc'
+                }
+            />
+            <Pagination
+                pagination={data}
+                onPageChange={onChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+        </div>
+    )
+}
+export default HomeTemplate
+```
+
+Debe de aparecer la tabla y los filtros:
 
 ![Untitled](Resources/index.png)
 
